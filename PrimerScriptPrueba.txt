@@ -1,0 +1,79 @@
+-- Usuarios
+CREATE TABLE Usuarios (
+    UserID INT AUTO_INCREMENT PRIMARY KEY,
+    Nombre VARCHAR(100) NOT NULL,
+    Apellido VARCHAR(100) NOT NULL,
+    Email VARCHAR(255) UNIQUE NOT NULL,
+    Contraseña VARCHAR(255) NOT NULL,
+    FechaRegistro DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Eventos
+CREATE TABLE Eventos (
+    EventoID INT AUTO_INCREMENT PRIMARY KEY,
+    NombreEvento VARCHAR(255) NOT NULL,
+    Descripcion TEXT,
+    FechaInicio DATETIME NOT NULL,
+    FechaFin DATETIME NOT NULL,
+    Ubicacion VARCHAR(255) NOT NULL,
+    OrganizadorID INT,
+    FOREIGN KEY (OrganizadorID) REFERENCES Usuarios(UserID),
+    CHECK (FechaFin > FechaInicio)
+);
+
+-- Inscripciones
+CREATE TABLE Inscripciones (
+    InscripcionID INT AUTO_INCREMENT PRIMARY KEY,
+    UserID INT NOT NULL,
+    EventoID INT NOT NULL,
+    FechaInscripcion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Estado VARCHAR(50) NOT NULL,
+    UNIQUE(UserID, EventoID),
+    FOREIGN KEY (UserID) REFERENCES Usuarios(UserID),
+    FOREIGN KEY (EventoID) REFERENCES Eventos(EventoID)
+);
+
+-- ParticipantesEvento (ManyToMany)
+CREATE TABLE ParticipantesEvento (
+    ParticipanteID INT,
+    EventoID INT,
+    PRIMARY KEY (ParticipanteID, EventoID),
+    FOREIGN KEY (ParticipanteID) REFERENCES Usuarios(UserID),
+    FOREIGN KEY (EventoID) REFERENCES Eventos(EventoID)
+);
+
+-- Roles (Para RBAC)
+CREATE TABLE Roles (
+    RolID INT AUTO_INCREMENT PRIMARY KEY,
+    NombreRol VARCHAR(100) UNIQUE NOT NULL,
+    DescripcionRol TEXT
+);
+
+-- Permisos
+CREATE TABLE Permisos (
+    PermisoID INT AUTO_INCREMENT PRIMARY KEY,
+    NombrePermiso VARCHAR(100) UNIQUE NOT NULL,
+    DescripcionPermiso TEXT
+);
+
+-- RolesPermisos (Relación entre Roles y Permisos)
+CREATE TABLE RolesPermisos (
+    RolID INT,
+    PermisoID INT,
+    PRIMARY KEY (RolID, PermisoID),
+    FOREIGN KEY (RolID) REFERENCES Roles(RolID),
+    FOREIGN KEY (PermisoID) REFERENCES Permisos(PermisoID)
+);
+
+-- UsuariosRoles (Asignar roles a usuarios)
+CREATE TABLE UsuariosRoles (
+    UserID INT,
+    RolID INT,
+    PRIMARY KEY (UserID, RolID),
+    FOREIGN KEY (UserID) REFERENCES Usuarios(UserID),
+    FOREIGN KEY (RolID) REFERENCES Roles(RolID)
+);
+
+-- Crear índices para optimizar las consultas
+CREATE INDEX idx_eventos_fecha ON Eventos(FechaInicio, FechaFin);
+CREATE INDEX idx_inscripciones_estado ON Inscripciones(Estado);
