@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title>[[#{resena.list.headline}]]</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 class="flex-grow-1">[[#{resena.list.headline}]]</h1>
+                <div>
+                    <a th:href="@{/resenas/add}" class="btn btn-primary ms-2">[[#{resena.list.createNew}]]</a>
+                </div>
+            </div>
+            <div th:if="${resenas.empty}">[[#{resena.list.empty}]]</div>
+            <div th:if="${!resenas.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">[[#{resena.resenaId.label}]]</th>
+                            <th scope="col">[[#{resena.fechaHora.label}]]</th>
+                            <th scope="col">[[#{resena.usuario.label}]]</th>
+                            <th scope="col">[[#{resena.evento.label}]]</th>
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="resena : ${resenas}">
+                            <td>[[${resena.resenaId}]]</td>
+                            <td>[[${resena.fechaHora}]]</td>
+                            <td>[[${resena.usuario}]]</td>
+                            <td>[[${resena.evento}]]</td>
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/resenas/edit/{resenaId}(resenaId=${resena.resenaId})}" class="btn btn-sm btn-secondary">[[#{resena.list.edit}]]</a>
+                                    <form th:action="@{/resenas/delete/{resenaId}(resenaId=${resena.resenaId})}"
+                                            th:hx-confirm="#{delete.confirm}" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-secondary">[[#{resena.list.delete}]]</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>
