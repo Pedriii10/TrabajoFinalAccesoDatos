@@ -1,0 +1,29 @@
+<!-- src/main/resources/templates/login.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Iniciar Sesión</title>
+    <link href="css/your-stylesheet.css" rel="stylesheet">
+</head>
+<body>
+<div class="login-container">
+    <div class="login-form">
+        <h2>Iniciar Sesión</h2>
+        <div class="social-login">
+            <a href="/oauth2/authorization/google"> <!-- Asegúrate de que esta es la ruta correcta configurada -->
+                <img src="images/google-icon.png" alt="Google Login">
+            </a>
+
+        </div>
+        <form action="#" method="post">
+            <!-- Form fields for email and password (if not using OAuth exclusively) -->
+        </form>
+    </div>
+    <div class="login-info">
+        <h4>Hola!!!</h4>
+        <p>Crear tu cuenta</p>
+        <a href="/register">REGISTRAR</a>
+    </div>
+</div>
+</body>
+</html>
