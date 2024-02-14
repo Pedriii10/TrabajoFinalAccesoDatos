@@ -30,7 +30,7 @@ public class InscripcioneController {
     private final EventoRepository eventoRepository;
 
     public InscripcioneController(final InscripcioneService inscripcioneService,
-            final UsuarioRepository usuarioRepository, final EventoRepository eventoRepository) {
+                                  final UsuarioRepository usuarioRepository, final EventoRepository eventoRepository) {
         this.inscripcioneService = inscripcioneService;
         this.usuarioRepository = usuarioRepository;
         this.eventoRepository = eventoRepository;

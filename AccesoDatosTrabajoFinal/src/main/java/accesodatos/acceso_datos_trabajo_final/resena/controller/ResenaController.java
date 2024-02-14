@@ -30,7 +30,7 @@ public class ResenaController {
     private final EventoRepository eventoRepository;
 
     public ResenaController(final ResenaService resenaService,
-            final UsuarioRepository usuarioRepository, final EventoRepository eventoRepository) {
+                            final UsuarioRepository usuarioRepository, final EventoRepository eventoRepository) {
         this.resenaService = resenaService;
         this.usuarioRepository = usuarioRepository;
         this.eventoRepository = eventoRepository;

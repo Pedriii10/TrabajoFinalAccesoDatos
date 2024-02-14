@@ -2,25 +2,31 @@
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
         layout:decorate="~{layout}">
     <head>
-        <title>[[#{home.index.headline}]]</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Inicio</title>
         <link rel="icon" type="image/x-icon" href="/favicon.ico">
+        <link rel="stylesheet" th:href="@{/css/index.css}">
     </head>
     <body>
-        <div layout:fragment="content">
-            <h1 class="mb-4">[[#{home.index.headline}]]</h1>
-            <p class="mb-5">[(#{home.index.text})]</p>
-            <div class="col-md-4 mb-5">
-                <h4 class="mb-3">[[#{home.index.exploreEntities}]]</h4>
-                <div class="list-group">
-                    <a th:href="@{/usuarios}" class="list-group-item list-group-item-action">[[#{usuario.list.headline}]]</a>
-                    <a th:href="@{/eventos}" class="list-group-item list-group-item-action">[[#{evento.list.headline}]]</a>
-                    <a th:href="@{/inscripciones}" class="list-group-item list-group-item-action">[[#{inscripcione.list.headline}]]</a>
-                    <a th:href="@{/fotosEventos}" class="list-group-item list-group-item-action">[[#{fotosEvento.list.headline}]]</a>
-                    <a th:href="@{/categorias}" class="list-group-item list-group-item-action">[[#{categoria.list.headline}]]</a>
-                    <a th:href="@{/entradas}" class="list-group-item list-group-item-action">[[#{entrada.list.headline}]]</a>
-                    <a th:href="@{/resenas}" class="list-group-item list-group-item-action">[[#{resena.list.headline}]]</a>
-                </div>
-            </div>
+    <nav class="navbar">
+        <h1>Nombre de usuario</h1>
+        <div class="navbar-links">
+            <a href="#">Calendario</a>
+            <a href="#">Ver eventos</a>
+            <a href="#">Crear evento</a>
         </div>
+    </nav>
+    <div class="container">
+        <div class="card-container">
+            <!-- Dynamically generate these cards based on your data -->
+            <div class="card">Nombre del evento - Fecha - Lugar</div>
+            <div class="card">Nombre del evento - Fecha - Lugar</div>
+            <div class="card">Nombre del evento - Fecha - Lugar</div>
+            <div class="card">Nombre del evento - Fecha - Lugar</div>
+            <div class="card">Nombre del evento - Fecha - Lugar</div>
+            <div class="card">Nombre del evento - Fecha - Lugar</div>
+        </div>
+    </div>
     </body>
 </html>

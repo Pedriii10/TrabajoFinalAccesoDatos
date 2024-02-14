@@ -21,7 +21,7 @@ public class InscripcioneService {
     private final EventoRepository eventoRepository;
 
     public InscripcioneService(final InscripcioneRepository inscripcioneRepository,
-            final UsuarioRepository usuarioRepository, final EventoRepository eventoRepository) {
+                               final UsuarioRepository usuarioRepository, final EventoRepository eventoRepository) {
         this.inscripcioneRepository = inscripcioneRepository;
         this.usuarioRepository = usuarioRepository;
         this.eventoRepository = eventoRepository;

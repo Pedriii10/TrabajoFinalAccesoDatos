@@ -2,38 +2,47 @@ package accesodatos.acceso_datos_trabajo_final.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.ExpressionUrlAuthorizationConfigurer;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.Collections;
+
 @Configuration
-@EnableWebSecurity
 public class SecurityConfig {
-
-    private static void customize(ExpressionUrlAuthorizationConfigurer<HttpSecurity>.ExpressionInterceptUrlRegistry authorizeRequests) {
-        authorizeRequests
-                .antMatchers("/login", "/register", "/oauth2/authorization/google").permitAll() // Permitir acceso sin autenticación a estas rutas
-                .anyRequest().authenticated();
-    }
-
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests(SecurityConfig::customize // Todas las demás solicitudes requieren autenticación
-        );
-        http.oauth2Login(oauth2Login ->
-                oauth2Login
-                        .loginPage("/login") // Página de inicio de sesión personalizada
-                        .defaultSuccessUrl("/home/index", true) // Página a la que se redirige después de un inicio de sesión exitoso
-                        .failureUrl("/login?error=true") // Página de inicio de sesión en caso de fallo
-        );
-        http.logout(logout ->
-                logout
-                        .logoutSuccessUrl("/login?logout=true") // Página a la que se redirige después de cerrar sesión
-        );
-        HttpSecurity logout1 = http;
-        return http.build();
+    public PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+    //    @Bean
+//    public UserDetailsService userDetailsService(){
+//        UserDetails user1 = new User("mike",passwordEncoder().encode("123"), Collections.emptyList());
+//        UserDetails user2 = User.builder()
+//                .username("Bob")
+//                .password(passwordEncoder().encode("124"))
+//                .build();
+//        return new InMemoryUserDetailsManager(user1,user2);
+//    }
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        return httpSecurity
+                .csrf(Customizer.withDefaults())
+                .authorizeHttpRequests(request->
+                        request.requestMatchers("/register","/login","/css/**",
+                                        "/js/**","/images/**").permitAll()
+                                .anyRequest().authenticated())
+                .formLogin(form-> form.loginPage("/login")
+                        .defaultSuccessUrl("/",true))
+                .oauth2Login(oauth2->oauth2
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/", true))
+                .build();
+
     }
 }
-
-

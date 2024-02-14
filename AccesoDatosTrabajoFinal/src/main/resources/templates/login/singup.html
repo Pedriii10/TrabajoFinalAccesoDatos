@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sign Up</title>
-    <link rel="stylesheet" th:href="@{/css/register.css}">
+    <link rel="stylesheet" th:href="@{/css/signup.css}">
 </head>
 <body>
 
@@ -13,23 +13,23 @@
     <section class="signup">
         <div class="container m-5" >
             <div class="signup-content">
-                <!-- Actualiza la acción para apuntar al endpoint '/register' -->
-                <form th:action="@{/register}" th:object="${usuario}" method="post" id="signup-form" class="signup-form">
+                <form th:action="@{/user/create}" th:object="${usuario}" method="post" id="signup-form" class="signup-form">
                     <h2 class="form-title">Create an account</h2>
-                    <!-- Asegúrate de que los campos coincidan con tu clase UsuarioDTO -->
                     <div class="form-group">
-                        <input type="text" class="form-input" th:field="*{nombre}" placeholder="Username" required/>
+                        <input type="text"  class="form-input" th:field="*{nombre}" name="firstname" id="firstname" placeholder="First Name" required/>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-input" th:field="*{correoElectronico}" placeholder="Email" required/>
+                        <input type="email"  class="form-input" th:field="*{correoElectronico}" name="email" id="email" placeholder="Your Email" required/>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="password"  class="form-input" th:field="*{contrasena}" name="password" id="password" placeholder="Password" required/>
                     </div>
                     <div class="form-group">
-                        <input type="password" class="form-input" th:field="*{contrasena}" placeholder="Password" required/>
+                        <input type="password"  class="form-input" th:field="*{confirmPassword}" name="re_password" id="re_password" placeholder="Confirm password" required/>
                     </div>
-                    <!-- Este campo debe ser manejado en el frontend o como parte de la lógica de validación en el servidor -->
-                    <div class="form-group">
-                        <input type="password" class="form-input" name="confirmPassword" placeholder="Confirm password" required/>
-                    </div>
+
+
                     <div class="form-group">
                         <input type="submit" name="submit" id="submit" class="form-submit" value="Sign up"/>
                     </div>
@@ -38,12 +38,10 @@
                     Have already an account? <a th:href="@{/login}" class="loginhere-link">Login here</a>
                 </p>
             </div>
-            <div th:if="${success}" th:text="${success}" class="alert alert-success"></div>
-            <div th:if="${error}" th:text="${error}" class="alert alert-danger"></div>
-
         </div>
     </section>
 </div>
+
 
 <script th:src="@{/js/jquery.signup.js}"></script>
 <script th:src="@{/js/signup.js}"></script>

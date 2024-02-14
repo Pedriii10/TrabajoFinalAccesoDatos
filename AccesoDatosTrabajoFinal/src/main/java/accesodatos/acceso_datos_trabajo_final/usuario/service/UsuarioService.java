@@ -11,8 +11,13 @@ import accesodatos.acceso_datos_trabajo_final.usuario.model.UsuarioDTO;
 import accesodatos.acceso_datos_trabajo_final.usuario.repos.UsuarioRepository;
 import accesodatos.acceso_datos_trabajo_final.util.NotFoundException;
 import accesodatos.acceso_datos_trabajo_final.util.WebUtils;
+
+import java.time.LocalDate;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 
@@ -47,10 +52,15 @@ public class UsuarioService {
                 .orElseThrow(NotFoundException::new);
     }
 
-    public Integer create(final UsuarioDTO usuarioDTO) {
-        final Usuario usuario = new Usuario();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    public Integer create(UsuarioDTO usuarioDTO) {
+        Usuario usuario = new Usuario();
         mapToEntity(usuarioDTO, usuario);
-        return usuarioRepository.save(usuario).getUsuarioId();
+        usuario.setContrasena(passwordEncoder.encode(usuarioDTO.getContrasena())); // Codifica la contraseña
+        usuario = usuarioRepository.save(usuario); // Guarda el usuario
+        return usuario.getUsuarioId(); // Devuelve el ID del usuario creado
     }
 
     public void update(final Integer usuarioId, final UsuarioDTO usuarioDTO) {

@@ -11,8 +11,4 @@ public class LoginController {
         return "login/login"; // Actualiza la ruta del template si es necesario
     }
 
-    @GetMapping("/register")
-    public String register() {
-        return "login/register"; // Actualiza la ruta del template si es necesario
-    }
 }

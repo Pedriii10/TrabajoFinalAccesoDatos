@@ -1,14 +1,18 @@
 package accesodatos.acceso_datos_trabajo_final;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
+@RequestMapping("/api/v1/home")
 public class HomeController {
-
-    @GetMapping("/")
-    public String redirectToLogin() {
-        return "redirect:/login";
+    @GetMapping
+    public ResponseEntity<String> getHomePage(){
+        return ResponseEntity.ok().body(
+                "welcome to Api End point"
+        );
     }
 }
 
