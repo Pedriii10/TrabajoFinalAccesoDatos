@@ -1,5 +1,7 @@
 package accesodatos.acceso_datos_trabajo_final.config;
 
+// import accesodatos.acceso_datos_trabajo_final.usuario.service.CustomUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -16,6 +18,10 @@ import java.util.Collections;
 
 @Configuration
 public class SecurityConfig {
+
+   // @Autowired
+    // private CustomUserDetailsService customUserDetailsService;
+
     @Bean
     public PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();

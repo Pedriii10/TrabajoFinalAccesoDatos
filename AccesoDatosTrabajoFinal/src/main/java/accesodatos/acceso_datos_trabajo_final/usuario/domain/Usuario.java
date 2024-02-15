@@ -3,13 +3,9 @@ package accesodatos.acceso_datos_trabajo_final.usuario.domain;
 import accesodatos.acceso_datos_trabajo_final.evento.domain.Evento;
 import accesodatos.acceso_datos_trabajo_final.inscripcione.domain.Inscripcione;
 import accesodatos.acceso_datos_trabajo_final.resena.domain.Resena;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Set;
@@ -19,8 +15,9 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 
 @Entity
+@Table(name="usuarios")
 @EntityListeners(AuditingEntityListener.class)
-public class Usuario {
+public class Usuario implements Serializable {
 
     @Id
     @Column(nullable = false, updatable = false)
@@ -30,14 +27,14 @@ public class Usuario {
     @Column(nullable = false)
     private String nombre;
 
-    @Column(nullable = false)
+    @Column(name = "correo_electronico", nullable = false)
     private String correoElectronico;
+
+
 
     @Column(nullable = false)
     private String contrasena;
 
-    @Column(nullable = false)
-    private LocalDate fechaRegistro;
 
     @Column
     private String fotoPerfil;
@@ -54,13 +51,6 @@ public class Usuario {
     @OneToMany(mappedBy = "usuario")
     private Set<Resena> usuarioResenas;
 
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private OffsetDateTime dateCreated;
-
-    @LastModifiedDate
-    @Column(nullable = false)
-    private OffsetDateTime lastUpdated;
 
     public Integer getUsuarioId() {
         return usuarioId;
@@ -94,13 +84,7 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
-    public LocalDate getFechaRegistro() {
-        return fechaRegistro;
-    }
 
-    public void setFechaRegistro(final LocalDate fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
-    }
 
     public String getFotoPerfil() {
         return fotoPerfil;
@@ -142,20 +126,6 @@ public class Usuario {
         this.usuarioResenas = usuarioResenas;
     }
 
-    public OffsetDateTime getDateCreated() {
-        return dateCreated;
-    }
 
-    public void setDateCreated(final OffsetDateTime dateCreated) {
-        this.dateCreated = dateCreated;
-    }
-
-    public OffsetDateTime getLastUpdated() {
-        return lastUpdated;
-    }
-
-    public void setLastUpdated(final OffsetDateTime lastUpdated) {
-        this.lastUpdated = lastUpdated;
-    }
 
 }

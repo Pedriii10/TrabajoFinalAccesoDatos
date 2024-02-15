@@ -13,7 +13,7 @@ public class UsuarioDTO {
     @Size(max = 255)
     private String nombre;
 
-    @NotNull
+
     @Size(max = 255)
     private String correoElectronico;
 
@@ -21,8 +21,6 @@ public class UsuarioDTO {
     @Size(max = 255)
     private String contrasena;
 
-    @NotNull
-    private LocalDate fechaRegistro;
 
     @Size(max = 255)
     private String fotoPerfil;
@@ -61,13 +59,6 @@ public class UsuarioDTO {
         this.contrasena = contrasena;
     }
 
-    public LocalDate getFechaRegistro() {
-        return fechaRegistro;
-    }
-
-    public void setFechaRegistro(final LocalDate fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
-    }
 
     public String getFotoPerfil() {
         return fotoPerfil;

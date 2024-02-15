@@ -1,18 +1,20 @@
 package accesodatos.acceso_datos_trabajo_final;
 
-import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("/api/v1/home")
+@Controller
+@RequestMapping("/home")
 public class HomeController {
+
     @GetMapping
-    public ResponseEntity<String> getHomePage(){
-        return ResponseEntity.ok().body(
-                "welcome to Api End point"
-        );
+    public String getHomePage(Model model){
+        // Puedes agregar atributos al modelo si es necesario
+        // model.addAttribute("attributeName", attributeValue);
+
+        // Retorna el nombre de la plantilla Thymeleaf sin la extensión .html
+        return "home";
     }
 }
-
