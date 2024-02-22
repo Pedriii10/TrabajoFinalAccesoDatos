@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/home")
+@RequestMapping("/")
 public class HomeController {
 
     @GetMapping
@@ -15,6 +15,6 @@ public class HomeController {
         // model.addAttribute("attributeName", attributeValue);
 
         // Retorna el nombre de la plantilla Thymeleaf sin la extensión .html
-        return "home";
+        return "home/home";
     }
 }
