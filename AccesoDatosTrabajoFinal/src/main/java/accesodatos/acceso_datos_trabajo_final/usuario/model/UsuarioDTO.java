@@ -15,7 +15,7 @@ public class UsuarioDTO {
 
 
     @Size(max = 255)
-    private String correoElectronico;
+    private String correo_electronico;
 
     @NotNull
     @Size(max = 255)
@@ -44,11 +44,11 @@ public class UsuarioDTO {
     }
 
     public String getCorreoElectronico() {
-        return correoElectronico;
+        return correo_electronico;
     }
 
     public void setCorreoElectronico(final String correoElectronico) {
-        this.correoElectronico = correoElectronico;
+        this.correo_electronico = correoElectronico;
     }
 
     public String getContrasena() {

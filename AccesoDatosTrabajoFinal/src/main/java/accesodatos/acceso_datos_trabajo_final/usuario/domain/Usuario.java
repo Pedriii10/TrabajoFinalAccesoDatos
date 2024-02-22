@@ -31,7 +31,6 @@ public class Usuario implements Serializable {
     private String correoElectronico;
 
 
-
     @Column(nullable = false)
     private String contrasena;
 

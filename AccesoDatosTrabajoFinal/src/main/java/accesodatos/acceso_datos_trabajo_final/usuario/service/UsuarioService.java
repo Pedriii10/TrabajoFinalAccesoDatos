@@ -23,6 +23,7 @@ import org.hibernate.service.spi.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -74,7 +75,7 @@ public class UsuarioService {
             String encodedPassword = passwordEncoder.encode(usuarioDTO.getContrasena());
 
             // Crear una consulta nativa para insertar solo los campos deseados
-            Query query = entityManager.createNativeQuery("INSERT INTO usuarios (Nombre, CorreoElectronico, Contrasena) VALUES (?, ?, ?)");
+            Query query = entityManager.createNativeQuery("INSERT INTO usuarios (Nombre, correo_electronico, Contrasena) VALUES (?, ?, ?)");
             query.setParameter(1, usuarioDTO.getNombre());
             query.setParameter(2, usuarioDTO.getCorreoElectronico());
             query.setParameter(3, encodedPassword);
@@ -144,4 +145,29 @@ public class UsuarioService {
         return null;
     }
 
+    public UsuarioDTO findByNombreAndContrasena(String nombre, String contrasena) {
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Correo Electrónico: " + contrasena);
+
+        try {
+            // Ejecutar la consulta nativa para buscar el usuario por nombre
+            Usuario usuario = (Usuario) entityManager.createNativeQuery("SELECT * FROM usuarios WHERE nombre = :nombre", Usuario.class)
+                    .setParameter("nombre", nombre)
+                    .getSingleResult();
+
+            // Verificar si la contraseña introducida coincide con la almacenada
+            if (passwordEncoder.matches(contrasena, usuario.getContrasena())) {
+                // Si las contraseñas coinciden, mapear el usuario a UsuarioDTO y retornarlo
+                return mapToDTO(usuario, new UsuarioDTO());
+            } else {
+                // Si las contraseñas no coinciden, lanzar una excepción
+                throw new ServiceException("Contraseña incorrecta");
+            }
+        } catch (Exception e) {
+            throw new ServiceException("Error al verificar el usuario o contraseña", e);
+        }
+    }
+
+
 }
+
