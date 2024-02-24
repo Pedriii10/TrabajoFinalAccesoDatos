@@ -37,3 +37,38 @@ body {
     justify-content: space-between;
     flex-wrap: wrap;
 }
+
+.event-card {
+    width: 280px; /* or any other width */
+    border: 1px solid #000;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.event-image {
+    background-color: #c0c0c0; /* placeholder color for the image */
+    height: 150px; /* adjust as needed */
+}
+
+.event-info {
+    padding: 15px;
+    background-color: #f0f0f0; /* light grey background */
+    text-align: center; /* center the text */
+}
+
+.event-info h3 {
+    margin-top: 0;
+    color: #333; /* dark grey text */
+}
+
+.event-info p {
+    margin: 5px 0;
+}
+
+.event-date {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    color: #333; /* dark grey text, same as title */
+}

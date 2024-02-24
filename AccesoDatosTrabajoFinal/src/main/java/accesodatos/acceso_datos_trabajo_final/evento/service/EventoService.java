@@ -16,6 +16,8 @@ import accesodatos.acceso_datos_trabajo_final.usuario.repos.UsuarioRepository;
 import accesodatos.acceso_datos_trabajo_final.util.NotFoundException;
 import accesodatos.acceso_datos_trabajo_final.util.WebUtils;
 import java.util.List;
+
+import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -56,10 +58,19 @@ public class EventoService {
                 .orElseThrow(NotFoundException::new);
     }
 
+    @Transactional
     public Integer create(final EventoDTO eventoDTO) {
-        final Evento evento = new Evento();
-        mapToEntity(eventoDTO, evento);
-        return eventoRepository.save(evento).getEventoId();
+        try {
+            final Evento evento = new Evento();
+            mapToEntity(eventoDTO, evento);
+            Evento savedEvento = eventoRepository.save(evento);
+            return savedEvento.getEventoId();
+        } catch (Exception e) {
+            // Log the exception
+            // This logging is just a placeholder, use a proper logger in your project
+            System.out.println("An error occurred while saving the event: " + e.getMessage());
+            throw new RuntimeException("Failed to save the event", e);
+        }
     }
 
     public void update(final Integer eventoId, final EventoDTO eventoDTO) {

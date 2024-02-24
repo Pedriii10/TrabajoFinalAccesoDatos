@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/eventos")
@@ -41,9 +43,12 @@ public class EventoController {
 
     @GetMapping
     public String list(final Model model) {
-        model.addAttribute("eventoes", eventoService.findAll());
+        List<EventoDTO> eventos = eventoService.findAll();
+        model.addAttribute("eventoes", eventos);
+        model.addAttribute("hasEventos", !eventos.isEmpty());
         return "evento/list";
     }
+
 
     @GetMapping("/add")
     public String add(@ModelAttribute("evento") final EventoDTO eventoDTO) {
@@ -51,15 +56,16 @@ public class EventoController {
     }
 
     @PostMapping("/add")
-    public String add(@ModelAttribute("evento") @Valid final EventoDTO eventoDTO,
-            final BindingResult bindingResult, final RedirectAttributes redirectAttributes) {
+    public String add(@ModelAttribute("evento") @Valid EventoDTO eventoDTO,
+                      BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
             return "evento/add";
         }
         eventoService.create(eventoDTO);
-        redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("evento.create.success"));
+        redirectAttributes.addFlashAttribute("success", "Evento creado con éxito");
         return "redirect:/eventos";
     }
+
 
     @GetMapping("/edit/{eventoId}")
     public String edit(@PathVariable(name = "eventoId") final Integer eventoId, final Model model) {

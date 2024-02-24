@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -25,7 +26,9 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String customLogin(String nombre, String password, RedirectAttributes redirectAttributes) {
+    public String customLogin(@RequestParam("nombre") String nombre, @RequestParam("password") String password, RedirectAttributes redirectAttributes) {
+        System.out.println("Nombre:" + nombre);
+        System.out.println("Pass:" + password);
         try {
             UsuarioDTO usuario = usuarioService.findByNombreAndContrasena(nombre, password);
             // Lógica después de una autenticación exitosa

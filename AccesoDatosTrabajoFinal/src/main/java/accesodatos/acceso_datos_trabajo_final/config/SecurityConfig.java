@@ -40,8 +40,8 @@ public class SecurityConfig {
         return httpSecurity
                 .csrf(Customizer.withDefaults())
                 .authorizeHttpRequests(request->
-                        request.requestMatchers("/register","/login","/css/**",
-                                        "/js/**","/images/**").permitAll()
+                        request.requestMatchers("/register","/login","/home","/","/home/**", "/css/**",
+                                        "/js/**","/images/**" ).permitAll()
                                 .anyRequest().authenticated())
                 .formLogin(form-> form.loginPage("/login")
                         .defaultSuccessUrl("/",true))
