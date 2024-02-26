@@ -35,14 +35,6 @@ public class EventoDTO {
     @NotNull
     private Boolean esGratis;
 
-    @Size(max = 255)
-    private String logo;
-
-    @Size(max = 255)
-    private String banner;
-
-    @NotNull
-    private Integer organizador;
 
     public Integer getEventoId() {
         return eventoId;
@@ -108,28 +100,5 @@ public class EventoDTO {
         this.esGratis = esGratis;
     }
 
-    public String getLogo() {
-        return logo;
-    }
-
-    public void setLogo(final String logo) {
-        this.logo = logo;
-    }
-
-    public String getBanner() {
-        return banner;
-    }
-
-    public void setBanner(final String banner) {
-        this.banner = banner;
-    }
-
-    public Integer getOrganizador() {
-        return organizador;
-    }
-
-    public void setOrganizador(final Integer organizador) {
-        this.organizador = organizador;
-    }
 
 }

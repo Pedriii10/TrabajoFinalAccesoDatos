@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eventos</title>
+</head>
+<body>
+<div th:fragment="content">
+    <div class="container">
+        <h1 class="my-4">Eventos
+            <a th:href="@{/evento/formCreate}" class="btn btn-primary text-white" role="button">Crear Evento</a>
+
+        </h1>
+        <div th:if="${hasEventos}" class="row">
+            <div th:each="evento : ${eventoes}" th:replace="evento/diseñoEvento :: evento(diseñoEvento=${evento})"></div>
+        </div>
+        <div th:unless="${hasEventos}">
+            <p>No hay eventos disponibles.</p>
+        </div>
+    </div>
+</div>
+</body>
+</html>

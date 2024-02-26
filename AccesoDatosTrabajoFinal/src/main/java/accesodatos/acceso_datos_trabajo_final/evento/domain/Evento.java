@@ -1,7 +1,5 @@
 package accesodatos.acceso_datos_trabajo_final.evento.domain;
 
-import accesodatos.acceso_datos_trabajo_final.entrada.domain.Entrada;
-import accesodatos.acceso_datos_trabajo_final.fotos_evento.domain.FotosEvento;
 import accesodatos.acceso_datos_trabajo_final.inscripcione.domain.Inscripcione;
 import accesodatos.acceso_datos_trabajo_final.resena.domain.Resena;
 import accesodatos.acceso_datos_trabajo_final.usuario.domain.Usuario;
@@ -52,24 +50,12 @@ public class Evento {
     @Column(nullable = false)
     private Boolean esGratis;
 
-    @Column
-    private String logo;
-
-    @Column
-    private String banner;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "organizador_id", nullable = false)
     private Usuario organizador;
 
     @OneToMany(mappedBy = "evento")
     private Set<Inscripcione> eventoInscripciones;
-
-    @OneToMany(mappedBy = "evento")
-    private Set<FotosEvento> eventoFotosEventoes;
-
-    @OneToMany(mappedBy = "evento")
-    private Set<Entrada> eventoEntradas;
 
     @OneToMany(mappedBy = "evento")
     private Set<Resena> eventoResenas;
@@ -146,22 +132,6 @@ public class Evento {
         this.esGratis = esGratis;
     }
 
-    public String getLogo() {
-        return logo;
-    }
-
-    public void setLogo(final String logo) {
-        this.logo = logo;
-    }
-
-    public String getBanner() {
-        return banner;
-    }
-
-    public void setBanner(final String banner) {
-        this.banner = banner;
-    }
-
     public Usuario getOrganizador() {
         return organizador;
     }
@@ -176,22 +146,6 @@ public class Evento {
 
     public void setEventoInscripciones(final Set<Inscripcione> eventoInscripciones) {
         this.eventoInscripciones = eventoInscripciones;
-    }
-
-    public Set<FotosEvento> getEventoFotosEventoes() {
-        return eventoFotosEventoes;
-    }
-
-    public void setEventoFotosEventoes(final Set<FotosEvento> eventoFotosEventoes) {
-        this.eventoFotosEventoes = eventoFotosEventoes;
-    }
-
-    public Set<Entrada> getEventoEntradas() {
-        return eventoEntradas;
-    }
-
-    public void setEventoEntradas(final Set<Entrada> eventoEntradas) {
-        this.eventoEntradas = eventoEntradas;
     }
 
     public Set<Resena> getEventoResenas() {

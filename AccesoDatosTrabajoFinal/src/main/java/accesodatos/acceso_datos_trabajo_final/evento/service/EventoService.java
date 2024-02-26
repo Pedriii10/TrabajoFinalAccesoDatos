@@ -1,20 +1,13 @@
 package accesodatos.acceso_datos_trabajo_final.evento.service;
 
-import accesodatos.acceso_datos_trabajo_final.entrada.domain.Entrada;
-import accesodatos.acceso_datos_trabajo_final.entrada.repos.EntradaRepository;
 import accesodatos.acceso_datos_trabajo_final.evento.domain.Evento;
 import accesodatos.acceso_datos_trabajo_final.evento.model.EventoDTO;
 import accesodatos.acceso_datos_trabajo_final.evento.repos.EventoRepository;
-import accesodatos.acceso_datos_trabajo_final.fotos_evento.domain.FotosEvento;
-import accesodatos.acceso_datos_trabajo_final.fotos_evento.repos.FotosEventoRepository;
-import accesodatos.acceso_datos_trabajo_final.inscripcione.domain.Inscripcione;
 import accesodatos.acceso_datos_trabajo_final.inscripcione.repos.InscripcioneRepository;
-import accesodatos.acceso_datos_trabajo_final.resena.domain.Resena;
 import accesodatos.acceso_datos_trabajo_final.resena.repos.ResenaRepository;
-import accesodatos.acceso_datos_trabajo_final.usuario.domain.Usuario;
 import accesodatos.acceso_datos_trabajo_final.usuario.repos.UsuarioRepository;
 import accesodatos.acceso_datos_trabajo_final.util.NotFoundException;
-import accesodatos.acceso_datos_trabajo_final.util.WebUtils;
+
 import java.util.List;
 
 import jakarta.transaction.Transactional;
@@ -25,23 +18,18 @@ import org.springframework.stereotype.Service;
 @Service
 public class EventoService {
 
-    private final EventoRepository eventoRepository;
-    private final UsuarioRepository usuarioRepository;
+    private static EventoRepository eventoRepository = null;
+    private static UsuarioRepository usuarioRepository = null;
     private final InscripcioneRepository inscripcioneRepository;
-    private final FotosEventoRepository fotosEventoRepository;
-    private final EntradaRepository entradaRepository;
     private final ResenaRepository resenaRepository;
 
     public EventoService(final EventoRepository eventoRepository,
-            final UsuarioRepository usuarioRepository,
-            final InscripcioneRepository inscripcioneRepository,
-            final FotosEventoRepository fotosEventoRepository,
-            final EntradaRepository entradaRepository, final ResenaRepository resenaRepository) {
+                         final UsuarioRepository usuarioRepository,
+                         final InscripcioneRepository inscripcioneRepository,
+                         final ResenaRepository resenaRepository) {
         this.eventoRepository = eventoRepository;
         this.usuarioRepository = usuarioRepository;
         this.inscripcioneRepository = inscripcioneRepository;
-        this.fotosEventoRepository = fotosEventoRepository;
-        this.entradaRepository = entradaRepository;
         this.resenaRepository = resenaRepository;
     }
 
@@ -59,7 +47,7 @@ public class EventoService {
     }
 
     @Transactional
-    public Integer create(final EventoDTO eventoDTO) {
+    public static Integer create(final Evento eventoDTO) {
         try {
             final Evento evento = new Evento();
             mapToEntity(eventoDTO, evento);
@@ -73,16 +61,8 @@ public class EventoService {
         }
     }
 
-    public void update(final Integer eventoId, final EventoDTO eventoDTO) {
-        final Evento evento = eventoRepository.findById(eventoId)
-                .orElseThrow(NotFoundException::new);
-        mapToEntity(eventoDTO, evento);
-        eventoRepository.save(evento);
-    }
 
-    public void delete(final Integer eventoId) {
-        eventoRepository.deleteById(eventoId);
-    }
+
 
     private EventoDTO mapToDTO(final Evento evento, final EventoDTO eventoDTO) {
         eventoDTO.setEventoId(evento.getEventoId());
@@ -93,13 +73,10 @@ public class EventoService {
         eventoDTO.setUbicacion(evento.getUbicacion());
         eventoDTO.setEsExterior(evento.getEsExterior());
         eventoDTO.setEsGratis(evento.getEsGratis());
-        eventoDTO.setLogo(evento.getLogo());
-        eventoDTO.setBanner(evento.getBanner());
-        eventoDTO.setOrganizador(evento.getOrganizador() == null ? null : evento.getOrganizador().getUsuarioId());
         return eventoDTO;
     }
 
-    private Evento mapToEntity(final EventoDTO eventoDTO, final Evento evento) {
+    private static Evento mapToEntity(final Evento eventoDTO, final Evento evento) {
         evento.setNombre(eventoDTO.getNombre());
         evento.setDescripcion(eventoDTO.getDescripcion());
         evento.setFechaInicio(eventoDTO.getFechaInicio());
@@ -107,34 +84,9 @@ public class EventoService {
         evento.setUbicacion(eventoDTO.getUbicacion());
         evento.setEsExterior(eventoDTO.getEsExterior());
         evento.setEsGratis(eventoDTO.getEsGratis());
-        evento.setLogo(eventoDTO.getLogo());
-        evento.setBanner(eventoDTO.getBanner());
-        final Usuario organizador = eventoDTO.getOrganizador() == null ? null : usuarioRepository.findById(eventoDTO.getOrganizador())
-                .orElseThrow(() -> new NotFoundException("organizador not found"));
-        evento.setOrganizador(organizador);
         return evento;
     }
 
-    public String getReferencedWarning(final Integer eventoId) {
-        final Evento evento = eventoRepository.findById(eventoId)
-                .orElseThrow(NotFoundException::new);
-        final Inscripcione eventoInscripcione = inscripcioneRepository.findFirstByEvento(evento);
-        if (eventoInscripcione != null) {
-            return WebUtils.getMessage("evento.inscripcione.evento.referenced", eventoInscripcione.getInscripcionId());
-        }
-        final FotosEvento eventoFotosEvento = fotosEventoRepository.findFirstByEvento(evento);
-        if (eventoFotosEvento != null) {
-            return WebUtils.getMessage("evento.fotosEvento.evento.referenced", eventoFotosEvento.getFotoId());
-        }
-        final Entrada eventoEntrada = entradaRepository.findFirstByEvento(evento);
-        if (eventoEntrada != null) {
-            return WebUtils.getMessage("evento.entrada.evento.referenced", eventoEntrada.getEntradaId());
-        }
-        final Resena eventoResena = resenaRepository.findFirstByEvento(evento);
-        if (eventoResena != null) {
-            return WebUtils.getMessage("evento.resena.evento.referenced", eventoResena.getResenaId());
-        }
-        return null;
-    }
+
 
 }

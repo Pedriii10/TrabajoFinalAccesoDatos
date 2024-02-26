@@ -38,25 +38,7 @@ public class EventoResource {
         return ResponseEntity.ok(eventoService.get(eventoId));
     }
 
-    @PostMapping
-    public ResponseEntity<Integer> createEvento(@RequestBody @Valid final EventoDTO eventoDTO) {
-        final Integer createdEventoId = eventoService.create(eventoDTO);
-        return new ResponseEntity<>(createdEventoId, HttpStatus.CREATED);
-    }
 
-    @PutMapping("/{eventoId}")
-    public ResponseEntity<Integer> updateEvento(
-            @PathVariable(name = "eventoId") final Integer eventoId,
-            @RequestBody @Valid final EventoDTO eventoDTO) {
-        eventoService.update(eventoId, eventoDTO);
-        return ResponseEntity.ok(eventoId);
-    }
 
-    @DeleteMapping("/{eventoId}")
-    public ResponseEntity<Void> deleteEvento(
-            @PathVariable(name = "eventoId") final Integer eventoId) {
-        eventoService.delete(eventoId);
-        return ResponseEntity.noContent().build();
-    }
 
 }
