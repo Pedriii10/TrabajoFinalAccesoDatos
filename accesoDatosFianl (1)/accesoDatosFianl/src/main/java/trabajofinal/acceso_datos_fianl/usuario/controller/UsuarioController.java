@@ -39,14 +39,18 @@ public class UsuarioController {
 
     @PostMapping("/add")
     public String add(@ModelAttribute("usuario") @Valid final UsuarioDTO usuarioDTO,
-            final BindingResult bindingResult, final RedirectAttributes redirectAttributes) {
+                      final BindingResult bindingResult, final RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
-            return "usuario/add";
+            // Aquí se deberían incluir los errores en el RedirectAttributes para que estén disponibles después de la redirección
+            redirectAttributes.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "usuario", bindingResult);
+            redirectAttributes.addFlashAttribute("usuario", usuarioDTO);
+            return "redirect:/register"; // Redirige de nuevo a la página de registro
         }
         usuarioService.create(usuarioDTO);
         redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("usuario.create.success"));
-        return "redirect:/usuarios";
+        return "redirect:/";
     }
+
 
     @GetMapping("/edit/{usuarioId}")
     public String edit(@PathVariable(name = "usuarioId") final Integer usuarioId,

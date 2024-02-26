@@ -5,4 +5,6 @@ import trabajofinal.acceso_datos_fianl.usuario.domain.Usuario;
 
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+
+
 }
