@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title>[[#{entrada.list.headline}]]</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 class="flex-grow-1">[[#{entrada.list.headline}]]</h1>
+                <div>
+                    <a th:href="@{/entradas/add}" class="btn btn-primary ms-2">[[#{entrada.list.createNew}]]</a>
+                </div>
+            </div>
+            <div th:if="${entradas.empty}">[[#{entrada.list.empty}]]</div>
+            <div th:if="${!entradas.empty}" class="table-responsive">
+                <table class="table table-striped table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th scope="col">[[#{entrada.entradaId.label}]]</th>
+                            <th scope="col">[[#{entrada.tipo.label}]]</th>
+                            <th scope="col">[[#{entrada.precio.label}]]</th>
+                            <th scope="col">[[#{entrada.cantidadDisponible.label}]]</th>
+                            <th scope="col">[[#{entrada.evento.label}]]</th>
+                            <th><!-- --></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="entrada : ${entradas}">
+                            <td>[[${entrada.entradaId}]]</td>
+                            <td>[[${entrada.tipo}]]</td>
+                            <td>[[${entrada.precio}]]</td>
+                            <td>[[${entrada.cantidadDisponible}]]</td>
+                            <td>[[${entrada.evento}]]</td>
+                            <td>
+                                <div class="float-end text-nowrap">
+                                    <a th:href="@{/entradas/edit/{entradaId}(entradaId=${entrada.entradaId})}" class="btn btn-sm btn-secondary">[[#{entrada.list.edit}]]</a>
+                                    <form th:action="@{/entradas/delete/{entradaId}(entradaId=${entrada.entradaId})}"
+                                            th:hx-confirm="#{delete.confirm}" method="post" class="d-inline">
+                                        <button type="submit" class="btn btn-sm btn-secondary">[[#{entrada.list.delete}]]</button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </body>
+</html>

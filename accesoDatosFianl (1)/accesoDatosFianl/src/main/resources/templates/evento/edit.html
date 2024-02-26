@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        layout:decorate="~{layout}">
+    <head>
+        <title>[[#{evento.edit.headline}]]</title>
+    </head>
+    <body>
+        <div layout:fragment="content">
+            <div class="d-flex flex-wrap mb-4">
+                <h1 class="flex-grow-1">[[#{evento.edit.headline}]]</h1>
+                <div>
+                    <a th:href="@{/eventos}" class="btn btn-secondary">[[#{evento.edit.back}]]</a>
+                </div>
+            </div>
+            <div th:replace="~{fragments/forms::globalErrors('evento')}" />
+            <form th:action="${requestUri}" method="post">
+                <input type="submit" th:value="#{evento.edit.headline}" class="btn btn-primary mt-4 mb-4" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='eventoId', disabled=true, type='number')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='nombre', required=true)}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='descripcion', required=true, type='textarea')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='fechaInicio', required=true)}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='fechaFin', required=true)}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='ubicacion', required=true)}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='esExterior', required=true, type='checkbox')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='esGratis', required=true, type='checkbox')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='logo')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='banner')}" />
+                <div th:replace="~{fragments/forms::inputRow(object='evento', field='organizador', required=true, type='select')}" />
+                <input type="submit" th:value="#{evento.edit.headline}" class="btn btn-primary mt-4" />
+            </form>
+        </div>
+    </body>
+</html>
