@@ -1,0 +1,100 @@
+<!-- eventoData.html -->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <title>Detalles del Evento</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <script src="./consultaApi.js" defer></script>
+    <link rel="stylesheet" href="../../static/css/styles.css">
+    <!-- Agregar enlaces a CSS y otros recursos según sea necesario -->
+    <style>
+        /* styles.css */
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        .evento-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .evento-titulo {
+            color: #333;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .evento-descripcion {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+        }
+
+        .evento-informacion p {
+            font-size: 1em;
+            line-height: 1.5;
+        }
+
+        .btn-consultar-tiempo {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1em;
+            color: white;
+            background: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        .btn-consultar-tiempo:hover {
+            background: #0056b3;
+        }
+
+        .tiempo-detalle {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #ccc;
+        }
+
+        .tiempo-icono {
+            width: 50px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="evento-container">
+        <h1 th:text="${evento.nombre}" class="evento-titulo">Nombre del Evento</h1>
+        <p th:text="${evento.descripcion}" class="evento-descripcion">Descripción del Evento</p>
+        <div class="evento-informacion">
+            <p>Ubicación: <span th:text="${evento.ubicacion}"></span></p>
+            <p>Inicio: <span th:text="${evento.fechaInicio}"></span></p>
+            <p>Fin: <span th:text="${evento.fechaFin}"></span></p>
+            <p>Es gratis: <span th:text="${evento.esGratis}"></span></p>
+            <p>Es en exterior: <span th:text="${evento.esExterior}"></span></p>
+        </div>
+        <button id="consultarTiempoBtn" class="btn-consultar-tiempo"
+                th:attr="data-fechaInicio=${evento.fechaInicio}, data-ubicacion=${evento.ubicacion}">
+            Consultar Tiempo
+        </button>
+        <div class="tiempo-detalle">
+            <h2>Detalles del Tiempo</h2>
+            <p>Temperatura Máxima: <span id="maxtemp_c"></span></p>
+            <p>Temperatura Mínima: <span id="mintemp_c"></span></p>
+            <p>Condición: <span id="condition_text"></span></p>
+            <img id="condition_icon" src="" alt="Icono de condición del clima" class="tiempo-icono">
+        </div>
+    </div>
+</div>
+</body>
+</html>

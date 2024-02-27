@@ -1,6 +1,8 @@
 package trabajofinal.acceso_datos_fianl.evento.service;
 
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import trabajofinal.acceso_datos_fianl.entrada.domain.Entrada;
@@ -30,6 +32,8 @@ public class EventoService {
     private final EntradaRepository entradaRepository;
     private final ResenaRepository resenaRepository;
 
+
+
     public EventoService(final EventoRepository eventoRepository,
             final UsuarioRepository usuarioRepository,
             final InscripcioneRepository inscripcioneRepository,
@@ -49,6 +53,8 @@ public class EventoService {
                 .map(evento -> mapToDTO(evento, new EventoDTO()))
                 .toList();
     }
+
+
 
     public EventoDTO get(final Integer eventoId) {
         return eventoRepository.findById(eventoId)
@@ -71,6 +77,10 @@ public class EventoService {
 
     public void delete(final Integer eventoId) {
         eventoRepository.deleteById(eventoId);
+    }
+
+    public Evento buscarPorId(Long id) {
+        return eventoRepository.findByEventoId(id);
     }
 
     private EventoDTO mapToDTO(final Evento evento, final EventoDTO eventoDTO) {

@@ -6,7 +6,7 @@ import trabajofinal.acceso_datos_fianl.usuario.domain.Usuario;
 
 
 public interface EventoRepository extends JpaRepository<Evento, Integer> {
-
+    Evento findByEventoId(Long id);
     Evento findFirstByOrganizador(Usuario usuario);
 
 }

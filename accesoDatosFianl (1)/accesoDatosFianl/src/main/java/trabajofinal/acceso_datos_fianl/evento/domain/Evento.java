@@ -11,6 +11,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Set;
 import lombok.Getter;
@@ -44,10 +46,10 @@ public class Evento {
     private String descripcion;
 
     @Column(nullable = false)
-    private OffsetDateTime fechaInicio;
+    private LocalDate fechaInicio;
 
     @Column(nullable = false)
-    private OffsetDateTime fechaFin;
+    private LocalDate fechaFin;
 
     @Column(nullable = false)
     private String ubicacion;
@@ -87,5 +89,6 @@ public class Evento {
     @LastModifiedDate
     @Column(nullable = false)
     private OffsetDateTime lastUpdated;
+
 
 }

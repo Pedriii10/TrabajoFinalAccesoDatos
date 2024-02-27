@@ -5,11 +5,9 @@ import org.springframework.ui.Model;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import trabajofinal.acceso_datos_fianl.evento.domain.Evento;
 import trabajofinal.acceso_datos_fianl.evento.service.EventoService;
 import trabajofinal.acceso_datos_fianl.usuario.domain.Usuario;
 import trabajofinal.acceso_datos_fianl.usuario.model.UsuarioDTO;
@@ -66,5 +64,11 @@ public class HomeController {
     public String home(Model model) {
         model.addAttribute("eventos", eventoService.findAll()); // Agrega la lista de eventos al modelo
         return "home/index";
+    }
+
+    @GetMapping("/index/vermas/{id}")
+    public String verDetalleEvento(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("evento", eventoService.buscarPorId(id));
+        return "home/eventoData";
     }
 }

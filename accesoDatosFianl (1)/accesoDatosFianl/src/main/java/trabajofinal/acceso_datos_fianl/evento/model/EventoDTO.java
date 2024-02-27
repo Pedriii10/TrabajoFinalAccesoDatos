@@ -2,6 +2,8 @@ package trabajofinal.acceso_datos_fianl.evento.model;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
+
+import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,12 +24,12 @@ public class EventoDTO {
     private String descripcion;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
-    private OffsetDateTime fechaInicio;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fechaInicio;
 
     @NotNull
-    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ssXXX")
-    private OffsetDateTime fechaFin;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private LocalDate fechaFin;
 
     @NotNull
     @Size(max = 255)
