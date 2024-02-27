@@ -64,16 +64,18 @@ public class UsuarioService {
         usuarioRepository.deleteById(usuarioId);
     }
 
-    public UsuarioDTO mapToDTO(final Usuario usuario, final UsuarioDTO usuarioDTO) {
+    private UsuarioDTO mapToDTO(final Usuario usuario, final UsuarioDTO usuarioDTO) {
         usuarioDTO.setUsuarioId(usuario.getUsuarioId());
         usuarioDTO.setNombre(usuario.getNombre());
         usuarioDTO.setCorreoElectronico(usuario.getCorreoElectronico());
-        usuarioDTO.setContrasena(usuario.getContrasena());
+        // Omitir la contraseña por seguridad
         usuarioDTO.setFechaRegistro(usuario.getFechaRegistro());
         usuarioDTO.setFotoPerfil(usuario.getFotoPerfil());
         usuarioDTO.setDescripcion(usuario.getDescripcion());
+        // Asegúrate de mapear todos los campos necesarios
         return usuarioDTO;
     }
+
 
     public Usuario mapToEntity(final UsuarioDTO usuarioDTO, final Usuario usuario) {
         usuario.setNombre(usuarioDTO.getNombre());
@@ -109,6 +111,9 @@ public class UsuarioService {
         }
         return null;
     }
+
+
+
 
 
 

@@ -18,7 +18,7 @@
     <div class="container">
         <nav class="navbar navbar-light navbar-expand-md">
             <a th:href="@{/}" class="navbar-brand">
-                <span class="ps-1">[[#{app.title}]]</span>
+                <span class="ps-1" th:text="${session.nombreUsuario != null} ? ${session.nombreUsuario} : #{app.title}">Nombre de la Aplicación</span>
             </a>
             <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarToggle"
                     th:aria-label="#{navigation.toggle}" aria-controls="navbarToggle" aria-expanded="false">
@@ -30,7 +30,7 @@
                         <a th:href="@{/index}" class="nav-link">[[#{navigation.home}]]</a>
                     </li>
                     <li class="navbar-item">
-                        <a th:href="@{/login}" class="nav-link">Login</a>
+                        <a th:href="@{/logout}" class="nav-link">Cerrar Sesión</a>
                     </li>
                     <li class="navbar-item">
                         <a th:href="@{/perfil}" class="nav-link">Perfil</a>

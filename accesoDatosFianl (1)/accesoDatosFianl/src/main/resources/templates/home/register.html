@@ -1,24 +1,87 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layout}">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Registro</title> <!-- Cambiado a Registro -->
+    <title>Registro</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f5f5f5;
+        }
+
+        .form-container {
+            background: white;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        h1 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="date"],
+        textarea {
+            width: calc(100% - 20px);
+            padding: 15px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; /* Asegura que el padding no aumente el tamaño del input */
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-<div layout:fragment="content">
-    <div class="d-flex flex-wrap mb-4">
-        <h1 class="flex-grow-1">Registro</h1> <!-- Cambiado a Registro -->
-        <!-- Elimina o ajusta este enlace si no es necesario -->
-    </div>
-    <div th:replace="~{fragments/forms::globalErrors('usuario')}" />
-    <form th:action="@{/usuarios/add}" method="post" th:object="${usuario}"> <!-- Ajustado a la ruta de registro -->
-        <div th:replace="~{fragments/forms::inputRow(object='usuario', field='nombre', required=true)}" />
-        <div th:replace="~{fragments/forms::inputRow(object='usuario', field='correoElectronico', required=true)}" />
-        <div th:replace="~{fragments/forms::inputRow(object='usuario', field='contrasena', required=true)}" />
-        <div th:replace="~{fragments/forms::inputRow(object='usuario', field='fechaRegistro', required=true, inputClass='js-datepicker')}" />
-        <div th:replace="~{fragments/forms::inputRow(object='usuario', field='fotoPerfil')}" />
-        <div th:replace="~{fragments/forms::inputRow(object='usuario', field='descripcion', type='textarea')}" />
-        <input type="submit" value="Registrarse" class="btn btn-primary mt-4" /> <!-- Cambiado el valor a Registrarse -->
+<div class="form-container">
+    <h1>Registro</h1>
+    <form th:action="@{/usuarios/add}" method="post" th:object="${usuario}">
+        <div class="form-group" th:replace="~{fragments/forms::inputRow(object='usuario', field='nombre', required=true)}"></div>
+        <div class="form-group" th:replace="~{fragments/forms::inputRow(object='usuario', field='correoElectronico', required=true)}"></div>
+        <div class="form-group" th:replace="~{fragments/forms::inputRow(object='usuario', field='contrasena', required=true)}"></div>
+        <div class="form-group">
+            <label for="fechaRegistro">Fecha de Registro</label>
+            <input type="date" id="fechaRegistro" name="fechaRegistro" required class="form-control">
+        </div>
+        <div class="form-group" th:replace="~{fragments/forms::inputRow(object='usuario', field='fotoPerfil')}"></div>
+        <div class="form-group" th:replace="~{fragments/forms::inputRow(object='usuario', field='descripcion', type='textarea')}"></div>
+        <input type="submit" value="Registrarse" class="btn btn-primary">
     </form>
 </div>
 </body>

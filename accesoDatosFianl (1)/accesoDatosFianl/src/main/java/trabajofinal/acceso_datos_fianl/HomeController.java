@@ -1,6 +1,7 @@
 package trabajofinal.acceso_datos_fianl;
 
 import ch.qos.logback.core.LayoutBase;
+import jakarta.servlet.http.HttpSession;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -70,25 +71,24 @@ public class HomeController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam(required = false) String correoElectronico, @RequestParam(required = false) String contrasena, Model model, RedirectAttributes redirectAttributes) {
-
-        System.out.println(correoElectronico);
-        System.out.println(contrasena);
-
+    public String login(@RequestParam(required = false) String correoElectronico, @RequestParam(required = false) String contrasena, Model model, HttpSession session) {
         Usuario user = usuarioRepository.findByCorreoElectronicoAndContrasena(correoElectronico, contrasena);
         if (user != null) {
-            UsuarioDTO userDTO = new UsuarioDTO();
-            userDTO = usuarioService.mapToDTO(user, userDTO);
-
-            redirectAttributes.addFlashAttribute("usuario", userDTO);
-            return "redirect:/index"; // Cambio aquí para redirigir a /index
+            session.setAttribute("nombreUsuario", user.getNombre()); // Guarda el nombre del usuario en la sesión
+            return "redirect:/index";
         } else {
+            model.addAttribute("loginError", "Credenciales inválidas.");
             return "home/login";
         }
     }
 
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate(); // Limpia la sesión
+        return "redirect:/login";
+    }
 
-
+    
 
 
 }
