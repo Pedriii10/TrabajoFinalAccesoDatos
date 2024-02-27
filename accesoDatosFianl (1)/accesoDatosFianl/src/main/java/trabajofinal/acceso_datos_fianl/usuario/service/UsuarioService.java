@@ -64,7 +64,7 @@ public class UsuarioService {
         usuarioRepository.deleteById(usuarioId);
     }
 
-    private UsuarioDTO mapToDTO(final Usuario usuario, final UsuarioDTO usuarioDTO) {
+    public UsuarioDTO mapToDTO(final Usuario usuario, final UsuarioDTO usuarioDTO) {
         usuarioDTO.setUsuarioId(usuario.getUsuarioId());
         usuarioDTO.setNombre(usuario.getNombre());
         usuarioDTO.setCorreoElectronico(usuario.getCorreoElectronico());
@@ -75,7 +75,7 @@ public class UsuarioService {
         return usuarioDTO;
     }
 
-    private Usuario mapToEntity(final UsuarioDTO usuarioDTO, final Usuario usuario) {
+    public Usuario mapToEntity(final UsuarioDTO usuarioDTO, final Usuario usuario) {
         usuario.setNombre(usuarioDTO.getNombre());
         usuario.setCorreoElectronico(usuarioDTO.getCorreoElectronico());
         usuario.setContrasena(usuarioDTO.getContrasena());
@@ -110,10 +110,6 @@ public class UsuarioService {
         return null;
     }
 
-    public Usuario findByCorreoElectronicoAndContrasena(String correoElectronico, String contrasena) {
-        return usuarioRepository.findByCorreoElectronicoAndContrasena(correoElectronico, contrasena)
-                .orElse(null); // Devolver null si no se encuentra el usuario
-    }
 
 
 

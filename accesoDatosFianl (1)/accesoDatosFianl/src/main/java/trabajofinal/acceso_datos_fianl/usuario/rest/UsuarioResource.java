@@ -67,17 +67,7 @@ public class UsuarioResource {
     }
 
     // Método de inicio de sesión agregado
-    @PostMapping("/")
-    public ResponseEntity<?> login(@RequestBody UsuarioDTO usuarioDTO) {
-        Usuario usuario = usuarioService.findByCorreoElectronicoAndContrasena(usuarioDTO.getCorreoElectronico(), usuarioDTO.getContrasena());
-        if (usuario != null) {
-            // Usuario encontrado con las credenciales correctas
-            return ResponseEntity.ok().body("Usuario autenticado con éxito");
-        } else {
-            // Credenciales incorrectas, o usuario no encontrado
-            return ResponseEntity.badRequest().body("Credenciales inválidas");
-        }
-    }
+
 
 
     // Clase interna para solicitudes de inicio de sesión

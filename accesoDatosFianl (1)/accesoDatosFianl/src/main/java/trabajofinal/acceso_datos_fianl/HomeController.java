@@ -13,6 +13,7 @@ import trabajofinal.acceso_datos_fianl.evento.domain.Evento;
 import trabajofinal.acceso_datos_fianl.evento.service.EventoService;
 import trabajofinal.acceso_datos_fianl.usuario.domain.Usuario;
 import trabajofinal.acceso_datos_fianl.usuario.model.UsuarioDTO;
+import trabajofinal.acceso_datos_fianl.usuario.repos.UsuarioRepository;
 import trabajofinal.acceso_datos_fianl.usuario.service.UsuarioService;
 
 
@@ -20,11 +21,14 @@ import trabajofinal.acceso_datos_fianl.usuario.service.UsuarioService;
 public class HomeController {
 
     private final UsuarioService usuarioService;
+
+    private UsuarioRepository usuarioRepository;
     @Autowired
     private EventoService eventoService;
 
-    public HomeController(UsuarioService usuarioService) {
+    public HomeController(UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
         this.usuarioService = usuarioService;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @GetMapping("/")
@@ -32,18 +36,6 @@ public class HomeController {
         return "home/login";
     }
 
-    @PostMapping("/")
-    public String login(@RequestParam String correo, @RequestParam String contrasena, RedirectAttributes redirectAttributes) {
-        Usuario usuario = usuarioService.findByCorreoElectronicoAndContrasena(correo, contrasena);
-        if (usuario != null) {
-            // Usuario encontrado con las credenciales correctas
-            return "redirect:/home/index";
-        } else {
-            // Credenciales incorrectas, o usuario no encontrado
-            redirectAttributes.addFlashAttribute("loginError", "Credenciales inválidas.");
-            return "redirect:/login";
-        }
-    }
 
 
     @GetMapping("/register")
@@ -76,6 +68,27 @@ public class HomeController {
         model.addAttribute("evento", eventoService.buscarPorId(id));
         return "home/eventoData";
     }
+
+    @PostMapping("/login")
+    public String login(@RequestParam(required = false) String correoElectronico, @RequestParam(required = false) String contrasena, Model model, RedirectAttributes redirectAttributes) {
+
+        System.out.println(correoElectronico);
+        System.out.println(contrasena);
+
+        Usuario user = usuarioRepository.findByCorreoElectronicoAndContrasena(correoElectronico, contrasena);
+        if (user != null) {
+            UsuarioDTO userDTO = new UsuarioDTO();
+            userDTO = usuarioService.mapToDTO(user, userDTO);
+
+            redirectAttributes.addFlashAttribute("usuario", userDTO);
+            return "redirect:/index"; // Cambio aquí para redirigir a /index
+        } else {
+            return "home/login";
+        }
+    }
+
+
+
 
 
 }
