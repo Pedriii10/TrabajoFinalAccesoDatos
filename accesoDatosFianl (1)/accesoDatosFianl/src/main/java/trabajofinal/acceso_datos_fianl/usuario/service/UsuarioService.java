@@ -110,4 +110,11 @@ public class UsuarioService {
         return null;
     }
 
+    public Usuario findByCorreoElectronicoAndContrasena(String correoElectronico, String contrasena) {
+        return usuarioRepository.findByCorreoElectronicoAndContrasena(correoElectronico, contrasena)
+                .orElse(null); // Devolver null si no se encuentra el usuario
+    }
+
+
+
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import trabajofinal.acceso_datos_fianl.usuario.domain.Usuario;
 import trabajofinal.acceso_datos_fianl.usuario.model.UsuarioDTO;
 import trabajofinal.acceso_datos_fianl.usuario.service.UsuarioService;
 import trabajofinal.acceso_datos_fianl.util.ReferencedException;
@@ -64,5 +65,44 @@ public class UsuarioResource {
         usuarioService.delete(usuarioId);
         return ResponseEntity.noContent().build();
     }
+
+    // Método de inicio de sesión agregado
+    @PostMapping("/")
+    public ResponseEntity<?> login(@RequestBody UsuarioDTO usuarioDTO) {
+        Usuario usuario = usuarioService.findByCorreoElectronicoAndContrasena(usuarioDTO.getCorreoElectronico(), usuarioDTO.getContrasena());
+        if (usuario != null) {
+            // Usuario encontrado con las credenciales correctas
+            return ResponseEntity.ok().body("Usuario autenticado con éxito");
+        } else {
+            // Credenciales incorrectas, o usuario no encontrado
+            return ResponseEntity.badRequest().body("Credenciales inválidas");
+        }
+    }
+
+
+    // Clase interna para solicitudes de inicio de sesión
+    static class LoginRequest {
+        private String correo;
+        private String contrasena;
+
+        // Getters y setters
+        public String getCorreo() {
+            return correo;
+        }
+
+        public void setCorreo(String correo) {
+            this.correo = correo;
+        }
+
+        public String getContrasena() {
+            return contrasena;
+        }
+
+        public void setContrasena(String contrasena) {
+            this.contrasena = contrasena;
+        }
+    }
+
+
 
 }

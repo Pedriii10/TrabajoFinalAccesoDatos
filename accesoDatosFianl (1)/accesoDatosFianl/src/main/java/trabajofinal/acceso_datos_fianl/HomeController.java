@@ -1,5 +1,7 @@
 package trabajofinal.acceso_datos_fianl;
 
+import ch.qos.logback.core.LayoutBase;
+import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import jakarta.validation.Valid;
@@ -30,16 +32,19 @@ public class HomeController {
         return "home/login";
     }
 
-    @PostMapping("/login")
-    public String login(@RequestParam String email, @RequestParam String password, Model model) {
-        // Aquí deberías verificar las credenciales del usuario
-        if ("usuario@example.com".equals(email) && "contraseña".equals(password)) {
-            return "redirect:/index"; // Redirigir a la página principal si el login es exitoso
+    @PostMapping("/")
+    public String login(@RequestParam String correo, @RequestParam String contrasena, RedirectAttributes redirectAttributes) {
+        Usuario usuario = usuarioService.findByCorreoElectronicoAndContrasena(correo, contrasena);
+        if (usuario != null) {
+            // Usuario encontrado con las credenciales correctas
+            return "redirect:/home/index";
         } else {
-            model.addAttribute("loginError", "Error en las credenciales.");
-            return "home/login"; // Mantener al usuario en la página de login si falla
+            // Credenciales incorrectas, o usuario no encontrado
+            redirectAttributes.addFlashAttribute("loginError", "Credenciales inválidas.");
+            return "redirect:/login";
         }
     }
+
 
     @GetMapping("/register")
     public String showRegistrationForm(Model model) {
@@ -71,4 +76,6 @@ public class HomeController {
         model.addAttribute("evento", eventoService.buscarPorId(id));
         return "home/eventoData";
     }
+
+
 }
