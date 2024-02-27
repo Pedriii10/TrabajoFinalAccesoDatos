@@ -5,7 +5,7 @@
         <title>[[#{evento.list.headline}]]</title>
     </head>
     <body>
-        <div layout:fragment="content">
+        <div layout:fragment="content" th:fragment="list(eventoes)">
             <div class="d-flex flex-wrap mb-4">
                 <h1 class="flex-grow-1">[[#{evento.list.headline}]]</h1>
                 <div>

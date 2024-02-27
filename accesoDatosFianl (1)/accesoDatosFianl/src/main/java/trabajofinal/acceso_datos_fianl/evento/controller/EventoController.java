@@ -59,7 +59,7 @@ public class EventoController {
         }
         eventoService.create(eventoDTO);
         redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("evento.create.success"));
-        return "redirect:/eventos";
+        return "redirect:/index";
     }
 
     @GetMapping("/edit/{eventoId}")
@@ -77,7 +77,7 @@ public class EventoController {
         }
         eventoService.update(eventoId, eventoDTO);
         redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("evento.update.success"));
-        return "redirect:/eventos";
+        return "redirect:/index";
     }
 
     @PostMapping("/delete/{eventoId}")
@@ -91,7 +91,7 @@ public class EventoController {
             eventoService.delete(eventoId);
             redirectAttributes.addFlashAttribute(WebUtils.MSG_INFO, WebUtils.getMessage("evento.delete.success"));
         }
-        return "redirect:/eventos";
+        return "redirect:/index";
     }
 
 }
