@@ -6,11 +6,11 @@
 </head>
 <body>
     <div layout:fragment="content">
+        <h1>Bienvenido, <span th:text="${nombreUsuario}">Nombre del Usuario</span>!</h1>
         <h2>Perfil de Usuario</h2>
-        <div>Nombre: <span th:text="${usuario.nombre}"></span></div>
-        <div>Correo Electrónico: <span th:text="${usuario.correoElectronico}"></span></div>
-        <div>Fecha de Registro: <span th:text="${usuario.fechaRegistro}"></span></div>
-        <div>Descripción: <span th:text="${usuario.descripcion}"></span></div>
+        <p>Nombre: <span th:text="${user.nombre}"></span></p>
+        <p>Correo Electrónico: <span th:text="${user.correoElectronico}"></span></p>
+
     </div>
 </body>
 </html>
