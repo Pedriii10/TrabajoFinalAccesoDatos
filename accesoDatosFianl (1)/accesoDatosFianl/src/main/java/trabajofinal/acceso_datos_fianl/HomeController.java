@@ -89,16 +89,8 @@ public class HomeController {
     }
 
     @GetMapping("/perfil")
-    public String perfil(Model model, HttpSession session) {
-        // Obtiene el nombre del usuario de la sesión
-        String nombreUsuario = (String) session.getAttribute("nombreUsuario");
-
-        // Busca el usuario por su nombre
-        Usuario user = usuarioRepository.findByNombre(nombreUsuario);
-
-        // Agrega el usuario al modelo para que pueda ser accesible en la vista
-        model.addAttribute("user", user);
-
+    public String perfil(Model model) {
+        // No es necesario obtener el usuario aquí, ya está disponible a través del controlador global
         return "home/perfil";
     }
 
