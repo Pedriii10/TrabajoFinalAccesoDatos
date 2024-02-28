@@ -77,7 +77,8 @@ public class HomeController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam(required = false) String correoElectronico, @RequestParam(required = false) String contrasena, Model model, HttpSession session) {
+    public String login(@RequestParam(required = false) String correoElectronico,
+                        @RequestParam(required = false) String contrasena, Model model, HttpSession session) {
         Usuario user = usuarioRepository.findByCorreoElectronicoAndContrasena(correoElectronico, contrasena);
         if (user != null) {
             session.setAttribute("nombreUsuario", user.getNombre()); // Guarda el nombre del usuario en la sesión
@@ -108,6 +109,12 @@ public class HomeController {
     }
 
 
+    @GetMapping("/index/verEventos/{usuarioId}")
+    public String verEventosPorOrganizador(@PathVariable Integer usuarioId, Model model) {
+        // Utiliza el usuarioId para buscar eventos organizados por este usuario
+        model.addAttribute("eventos", eventoService.findAllByOrganizadorId(usuarioId));
+        return "home/misEventos"; // Asegúrate de que la vista 'home/misEventos' exista y esté configurada correctamente
+    }
 
 
 

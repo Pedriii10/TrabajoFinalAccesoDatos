@@ -38,6 +38,7 @@
         <div class="profile-header text-center">
             <img th:src="@{'data:image/jpeg;base64,' + ${imagenBase64}}" class="profile-img" alt="Foto de perfil" th:if="${imagenBase64}">
             <h1>Bienvenido, <span th:text="${user.nombre}">Nombre del Usuario</span>!</h1>
+            <h1>Bienvenido, <span th:text="${user.usuarioId}">Nombre del Usuario</span>!</h1>
         </div>
 
         <div class="row">
@@ -49,6 +50,7 @@
                     <p><strong>Fecha de Registro:</strong> <span th:text="${user.fechaRegistro}"></span></p>
                     <p><strong>Descripción:</strong> <span th:text="${user.descripcion}">N/A</span></p>
                     <a th:href="@{/index/verEventos/{usuarioId}(usuarioId=${user.usuarioId})}" class="btn btn-primary">Ver mis Eventos</a>
+                    <a th:href="@{/index/misInscripciones/{usuarioId}(usuarioId=${user.usuarioId})}" class="btn btn-primary">Mis inscripciones</a>
                 </div>
             </div>
         </div>

@@ -68,7 +68,7 @@ public class InscripcioneController {
         }
         inscripcioneService.create(inscripcioneDTO);
         redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("inscripcione.create.success"));
-        return "redirect:/inscripciones";
+        return "redirect:/eventoData";
     }
 
     @GetMapping("/edit/{inscripcionId}")
@@ -98,7 +98,7 @@ public class InscripcioneController {
         return "redirect:/inscripciones";
     }
 
-    @GetMapping("/inscripciones/add/{eventoId}")
+    @GetMapping("/add/{eventoId}")
     public String mostrarFormularioInscripcion(@PathVariable("eventoId") Integer eventoId, Model model, HttpSession session) {
         Integer usuarioId = (Integer) session.getAttribute("usuarioId");
         Evento evento = eventoRepository.findById(eventoId)
@@ -112,10 +112,15 @@ public class InscripcioneController {
     }
 
     @PostMapping("/inscripciones/add")
-    public String procesarInscripcion(@ModelAttribute("inscripcione") InscripcioneDTO inscripcioneDTO, BindingResult result, HttpSession session, RedirectAttributes redirectAttributes) {
+    public String procesarInscripcion(@ModelAttribute("inscripcione") InscripcioneDTO inscripcioneDTO,
+                                      BindingResult result, HttpSession session, RedirectAttributes redirectAttributes, final Model model) {
         if (result.hasErrors()) {
-            return "inscripcione/add";
+            return "home/eventoData";
         }
+
+        Usuario u = (Usuario) model.getAttribute("user");
+        assert u != null;
+        inscripcioneDTO.setUsuario(u.getUsuarioId());
         String respuesta = inscripcioneService.inscribirse(inscripcioneDTO.getEvento(), (Integer)session.getAttribute("usuarioId"));
         redirectAttributes.addFlashAttribute("mensaje", respuesta);
         return "redirect:/eventos/detalles/" + inscripcioneDTO.getEvento(); // Asegúrate de que la ruta sea correcta

@@ -59,10 +59,13 @@ public class EventoController {
 
     @PostMapping("/add")
     public String add(@ModelAttribute("evento") @Valid final EventoDTO eventoDTO,
-            final BindingResult bindingResult, final RedirectAttributes redirectAttributes) {
+            final BindingResult bindingResult, final RedirectAttributes redirectAttributes, final Model model) {
         if (bindingResult.hasErrors()) {
             return "evento/add";
         }
+        Usuario u = (Usuario) model.getAttribute("user");
+        assert u != null;
+        eventoDTO.setOrganizador(u.getUsuarioId());
         eventoService.create(eventoDTO);
         redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("evento.create.success"));
         return "redirect:/index";

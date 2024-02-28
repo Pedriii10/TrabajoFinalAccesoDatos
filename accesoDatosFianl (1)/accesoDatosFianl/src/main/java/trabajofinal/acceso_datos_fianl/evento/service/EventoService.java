@@ -54,6 +54,16 @@ public class EventoService {
                 .toList();
     }
 
+    public List<EventoDTO> findAllByOrganizadorId(Integer organizadorId) {
+        // Utiliza el nuevo método del repositorio para obtener eventos por el ID del organizador
+        final List<Evento> eventosDelOrganizador = eventoRepository.findByOrganizadorUsuarioId(organizadorId);
+        // Convierte la lista de eventos a EventoDTO y devuélvela
+        return eventosDelOrganizador.stream()
+                .map(evento -> mapToDTO(evento, new EventoDTO()))
+                .toList();
+    }
+
+
 
 
     public EventoDTO get(final Integer eventoId) {

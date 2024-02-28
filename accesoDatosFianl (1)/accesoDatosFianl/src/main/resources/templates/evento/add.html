@@ -23,7 +23,8 @@
                 <div th:replace="~{fragments/forms::inputRow(object='evento', field='esGratis', required=true, type='checkbox')}" />
                 <div th:replace="~{fragments/forms::inputRow(object='evento', field='logo')}" />
                 <div th:replace="~{fragments/forms::inputRow(object='evento', field='banner')}" />
-                <div th:replace="~{fragments/forms::inputRow(object='evento', field='organizador', required=true, type='select')}" />
+                <input type="hidden" name="organizador" value="0">
+                <!-- <div th:replace="~{fragments/forms::inputRow(object='evento', field='organizador', required=true, type='select')}" /> -->
                 <input type="submit" th:value="#{evento.add.headline}" class="btn btn-primary mt-4" />
             </form>
         </div>

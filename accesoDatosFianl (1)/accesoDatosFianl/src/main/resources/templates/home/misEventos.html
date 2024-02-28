@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}" lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>[[#{home.index.headline}]]</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <style>
+        .card {
+          /* Ajustes para hacer la tarjeta un poco más ancha */
+          width: 100%; /* Ajustar según sea necesario */
+        }
+        .card-title {
+          text-align: center;
+          margin-bottom: 15px; /* Espacio después del título */
+        }
+        .descripcion {
+          font-size: 0.8em; /* Ajustar según sea necesario */
+          margin-bottom: 10px; /* Espacio antes de la ubicación */
+        }
+        .ubicacion a {
+          font-weight: bold;
+          text-decoration: none;
+          display: block; /* Hace que el enlace llene toda la línea */
+          margin-bottom: 5px; /* Espacio antes de las fechas */
+        }
+        .fecha {
+          font-size: 0.7em; /* Ajustar según sea necesario */
+          text-align: left; /* Alinea las fechas a la izquierda */
+          margin-bottom: 2px; /* Reduce el espacio entre las fechas */
+        }
+    </style>
+</head>
+<body>
+    <div layout:fragment="content">
+        <div>
+            <div class="d-flex flex-wrap mb-4">
+                <h1 class="flex-grow-1">Mis Eventos</h1>
+            </div>
+            <div th:if="${eventos.empty}">No has organizado eventos todavía.</div>
+            <div th:if="${!eventos.empty}" class="row">
+                <!-- Itera sobre cada evento y crea una tarjeta para él -->
+                <div th:each="evento : ${eventos}" class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${evento.nombre}">Nombre del evento</h5>
+                            <p class="descripcion" th:text="${evento.descripcion}">Descripción del evento</p>
+                            <p class="ubicacion">
+                                <a href="#" th:href="@{'https://www.google.com/maps/search/?api=1&query=' + ${evento.ubicacion}}" target="_blank" th:text="${evento.ubicacion}">Lugar</a>
+                            </p>
+                            <p class="fecha" th:text="${'Inicio: ' + evento.fechaInicio}">Fecha de inicio</p>
+                            <p class="fecha" th:text="${'Fin: ' + evento.fechaFin}">Fecha de fin</p>
+                            <!-- Botón Ver más -->
+                            <a th:href="@{'/eventos/ver/' + ${evento.eventoId}}" class="btn btn-primary">Ver más</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
