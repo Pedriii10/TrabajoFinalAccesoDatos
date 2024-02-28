@@ -3,6 +3,7 @@ package trabajofinal.acceso_datos_fianl.usuario.service;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import trabajofinal.acceso_datos_fianl.evento.domain.Evento;
 import trabajofinal.acceso_datos_fianl.evento.repos.EventoRepository;
 import trabajofinal.acceso_datos_fianl.inscripcione.domain.Inscripcione;
@@ -111,10 +112,6 @@ public class UsuarioService {
         }
         return null;
     }
-
-
-
-
 
 
 

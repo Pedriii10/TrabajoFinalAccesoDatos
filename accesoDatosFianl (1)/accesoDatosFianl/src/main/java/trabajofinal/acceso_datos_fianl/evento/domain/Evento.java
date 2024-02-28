@@ -28,7 +28,7 @@ import trabajofinal.acceso_datos_fianl.usuario.domain.Usuario;
 
 
 @Entity
-@Table(name = "Eventoes")
+@Table(name = "Evento")
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter

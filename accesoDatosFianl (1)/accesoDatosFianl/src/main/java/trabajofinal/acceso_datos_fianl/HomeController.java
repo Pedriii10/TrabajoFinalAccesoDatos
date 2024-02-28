@@ -4,6 +4,10 @@ import ch.qos.logback.core.LayoutBase;
 import jakarta.servlet.http.HttpSession;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
@@ -16,6 +20,8 @@ import trabajofinal.acceso_datos_fianl.usuario.domain.Usuario;
 import trabajofinal.acceso_datos_fianl.usuario.model.UsuarioDTO;
 import trabajofinal.acceso_datos_fianl.usuario.repos.UsuarioRepository;
 import trabajofinal.acceso_datos_fianl.usuario.service.UsuarioService;
+
+import java.util.Base64;
 
 
 @Controller
@@ -89,10 +95,18 @@ public class HomeController {
     }
 
     @GetMapping("/perfil")
-    public String perfil(Model model) {
-        // No es necesario obtener el usuario aquí, ya está disponible a través del controlador global
+    public String perfil(Model model, HttpSession session) {
+        // Obtener el objeto usuario del modelo, que fue agregado por GlobalControllerAdvice
+        Usuario usuario = (Usuario) model.getAttribute("user");
+
+        if (usuario != null && usuario.getFotoPerfil() != null) {
+            String imagenBase64 = Base64.getEncoder().encodeToString(usuario.getFotoPerfil());
+            model.addAttribute("imagenBase64", imagenBase64);
+        }
+
         return "home/perfil";
     }
+
 
 
 

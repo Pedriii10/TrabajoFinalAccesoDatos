@@ -1,16 +1,59 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}" lang="en" >
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}" lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Perfil de Usuario</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .profile-header {
+            background: #f7f7f7;
+            margin-bottom: 30px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin: 0 auto;
+            display: block;
+        }
+        .profile-info {
+            margin-top: 20px;
+        }
+        .profile-info h2 {
+            font-size: 24px;
+            font-weight: 600;
+        }
+        .profile-info p {
+            font-size: 16px;
+            margin: 10px 0;
+        }
+    </style>
 </head>
 <body>
-    <div layout:fragment="content">
-        <h1>Bienvenido, <span th:text="${user.nombre}">Nombre del Usuario</span>!</h1>
-        <h2>Perfil de Usuario</h2>
-        <p>Nombre: <span th:text="${user.nombre}"></span></p>
-        <p>Correo Electrónico: <span th:text="${user.correoElectronico}"></span></p>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="profile-header text-center">
+            <img th:src="@{'data:image/jpeg;base64,' + ${imagenBase64}}" class="profile-img" alt="Foto de perfil" th:if="${imagenBase64}">
+            <h1>Bienvenido, <span th:text="${user.nombre}">Nombre del Usuario</span>!</h1>
+        </div>
 
+        <div class="row">
+            <div class="col-md-6 offset-md-3">
+                <div class="profile-info">
+                    <h2>Perfil de Usuario</h2>
+                    <p><strong>Nombre:</strong> <span th:text="${user.nombre}"></span></p>
+                    <p><strong>Correo Electrónico:</strong> <span th:text="${user.correoElectronico}"></span></p>
+                    <p><strong>Fecha de Registro:</strong> <span th:text="${user.fechaRegistro}"></span></p>
+                    <p><strong>Descripción:</strong> <span th:text="${user.descripcion}">N/A</span></p>
+                    <a th:href="@{'/index/verEventos/' + ${user.usuarioId}}" class="btn btn-primary">Ver más</a>
+                </div>
+            </div>
+        </div>
     </div>
+
+</div>
 </body>
 </html>

@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import trabajofinal.acceso_datos_fianl.evento.domain.Evento;
 import trabajofinal.acceso_datos_fianl.evento.model.EventoDTO;
+import trabajofinal.acceso_datos_fianl.evento.repos.EventoRepository;
 import trabajofinal.acceso_datos_fianl.evento.service.EventoService;
 import trabajofinal.acceso_datos_fianl.usuario.domain.Usuario;
 import trabajofinal.acceso_datos_fianl.usuario.repos.UsuarioRepository;
@@ -19,17 +21,21 @@ import trabajofinal.acceso_datos_fianl.util.CustomCollectors;
 import trabajofinal.acceso_datos_fianl.util.ReferencedWarning;
 import trabajofinal.acceso_datos_fianl.util.WebUtils;
 
+import java.util.List;
+
 
 @Controller
 @RequestMapping("/eventos")
 public class EventoController {
 
     private final EventoService eventoService;
+    private final EventoRepository eventoRepository;
     private final UsuarioRepository usuarioRepository;
 
-    public EventoController(final EventoService eventoService,
-            final UsuarioRepository usuarioRepository) {
+    public EventoController(final EventoService eventoService, EventoRepository eventoRepository,
+                            final UsuarioRepository usuarioRepository) {
         this.eventoService = eventoService;
+        this.eventoRepository = eventoRepository;
         this.usuarioRepository = usuarioRepository;
     }
 
@@ -93,5 +99,17 @@ public class EventoController {
         }
         return "redirect:/index";
     }
+
+    @GetMapping("/index/verEventos/{usuarioId}")
+    public String verMisEventos(@PathVariable("usuarioId") Integer usuarioId, Model model) {
+        List<Evento> eventosDelUsuario = eventoRepository.buscarPorOrganizador(usuarioId);
+        model.addAttribute("eventos", eventosDelUsuario);
+        return "evento/misEventos"; // Asegúrate de que la ruta a la plantilla sea correcta
+    }
+
+
+
+
+
 
 }

@@ -1,13 +1,7 @@
 package trabajofinal.acceso_datos_fianl.usuario.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
+
 import java.time.LocalDate;
 import java.time.OffsetDateTime;
 import java.util.Set;
@@ -45,8 +39,9 @@ public class Usuario {
     @Column(nullable = false)
     private LocalDate fechaRegistro;
 
-    @Column
-    private String fotoPerfil;
+    @Lob
+    @Column(name = "fotoPerfil")
+    private byte[] fotoPerfil;
 
     @Column(columnDefinition = "longtext")
     private String descripcion;

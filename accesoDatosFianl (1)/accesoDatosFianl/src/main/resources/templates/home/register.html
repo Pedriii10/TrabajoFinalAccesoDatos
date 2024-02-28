@@ -79,7 +79,10 @@
             <label for="fechaRegistro">Fecha de Registro</label>
             <input type="date" id="fechaRegistro" name="fechaRegistro" required class="form-control">
         </div>
-        <div class="form-group" th:replace="~{fragments/forms::inputRow(object='usuario', field='fotoPerfil')}"></div>
+        <div class="form-group">
+            <label for="fotoPerfil">Foto de Perfil</label>
+            <input type="file" id="fotoPerfil" name="fotoPerfil" accept="image/*">
+        </div>
         <div class="form-group" th:replace="~{fragments/forms::inputRow(object='usuario', field='descripcion', type='textarea')}"></div>
         <input type="submit" value="Registrarse" class="btn btn-primary">
     </form>

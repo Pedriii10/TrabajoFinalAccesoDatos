@@ -29,7 +29,7 @@ public class UsuarioDTO {
     private LocalDate fechaRegistro;
 
     @Size(max = 255)
-    private String fotoPerfil;
+    private byte[] fotoPerfil;
 
     private String descripcion;
 

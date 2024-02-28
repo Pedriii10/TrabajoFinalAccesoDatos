@@ -1,19 +1,23 @@
 package trabajofinal.acceso_datos_fianl.usuario.controller;
 
+import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Path;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import trabajofinal.acceso_datos_fianl.usuario.model.UsuarioDTO;
 import trabajofinal.acceso_datos_fianl.usuario.service.UsuarioService;
 import trabajofinal.acceso_datos_fianl.util.ReferencedWarning;
 import trabajofinal.acceso_datos_fianl.util.WebUtils;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.security.Principal;
 
 
 @Controller
@@ -84,5 +88,21 @@ public class UsuarioController {
         }
         return "redirect:/usuarios";
     }
+
+    @GetMapping("/foto/add")
+    public String mostrarFormularioDeFoto() {
+        return "usuario/addFoto";
+    }
+
+    @PostMapping("/foto/add")
+    public String agregarFoto(@RequestParam("foto") MultipartFile foto, HttpSession session, RedirectAttributes redirectAttributes) {
+
+
+        return "redirect:/perfil";
+    }
+
+
+// Método para borrar la foto de perfil
+
 
 }

@@ -1,0 +1,17 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
+<head>
+    <title>Añadir Foto</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <form th:action="@{/usuarios/foto/add}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="foto">Selecciona una foto</label>
+            <input type="file" id="foto" name="foto" accept="image/*">
+        </div>
+        <button type="submit" class="btn btn-primary">Subir Foto</button>
+    </form>
+</div>
+</body>
+</html>
