@@ -1,5 +1,6 @@
 package trabajofinal.acceso_datos_fianl.inscripcione.service;
 
+import java.time.LocalDate;
 import java.util.List;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -79,5 +80,30 @@ public class InscripcioneService {
         inscripcione.setEvento(evento);
         return inscripcione;
     }
+
+    public String inscribirse(Integer eventoId, Integer usuarioId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new NotFoundException("Usuario no encontrado"));
+        Evento evento = eventoRepository.findById(eventoId)
+                .orElseThrow(() -> new NotFoundException("Evento no encontrado"));
+
+        if (evento.getOrganizador().equals(usuario)) {
+            return "No puedes inscribirte en tu propio evento.";
+        }
+
+        if (inscripcioneRepository.existsByEventoAndUsuario(evento, usuario)) {
+            return "Ya estás inscrito en este evento.";
+        }
+
+        Inscripcione inscripcione = new Inscripcione();
+        inscripcione.setUsuario(usuario);
+        inscripcione.setEvento(evento);
+        inscripcione.setFechaInscripcion(LocalDate.now());
+        inscripcione.setEstado("PENDIENTE"); // O el estado inicial que desees
+
+        inscripcioneRepository.save(inscripcione);
+        return "Inscripción realizada con éxito.";
+    }
+
 
 }

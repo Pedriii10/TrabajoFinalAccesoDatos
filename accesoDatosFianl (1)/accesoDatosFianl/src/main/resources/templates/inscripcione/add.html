@@ -13,7 +13,7 @@
                 </div>
             </div>
             <div th:replace="~{fragments/forms::globalErrors('inscripcione')}" />
-            <form th:action="${requestUri}" method="post">
+            <form th:action="@{/inscripciones/add}" method="post">
                 <div th:replace="~{fragments/forms::inputRow(object='inscripcione', field='fechaInscripcion', required=true, inputClass='js-datepicker')}" />
                 <div th:replace="~{fragments/forms::inputRow(object='inscripcione', field='estado', required=true)}" />
                 <div th:replace="~{fragments/forms::inputRow(object='inscripcione', field='usuario', required=true, type='select')}" />

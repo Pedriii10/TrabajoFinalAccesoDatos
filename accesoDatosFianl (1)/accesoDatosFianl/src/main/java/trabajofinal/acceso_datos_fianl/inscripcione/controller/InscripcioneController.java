@@ -1,7 +1,9 @@
 package trabajofinal.acceso_datos_fianl.inscripcione.controller;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import trabajofinal.acceso_datos_fianl.evento.domain.Evento;
 import trabajofinal.acceso_datos_fianl.evento.repos.EventoRepository;
@@ -94,5 +97,30 @@ public class InscripcioneController {
         redirectAttributes.addFlashAttribute(WebUtils.MSG_INFO, WebUtils.getMessage("inscripcione.delete.success"));
         return "redirect:/inscripciones";
     }
+
+    @GetMapping("/inscripciones/add/{eventoId}")
+    public String mostrarFormularioInscripcion(@PathVariable("eventoId") Integer eventoId, Model model, HttpSession session) {
+        Integer usuarioId = (Integer) session.getAttribute("usuarioId");
+        Evento evento = eventoRepository.findById(eventoId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Evento no encontrado"));
+        if (evento.getOrganizador().getUsuarioId().equals(usuarioId)) {
+            model.addAttribute("mensaje", "Eres el organizador de este evento y no puedes inscribirte.");
+            return "evento/eventoData"; // o la vista que muestre el mensaje
+        }
+        model.addAttribute("inscripcione", new InscripcioneDTO());
+        return "inscripcione/add";
+    }
+
+    @PostMapping("/inscripciones/add")
+    public String procesarInscripcion(@ModelAttribute("inscripcione") InscripcioneDTO inscripcioneDTO, BindingResult result, HttpSession session, RedirectAttributes redirectAttributes) {
+        if (result.hasErrors()) {
+            return "inscripcione/add";
+        }
+        String respuesta = inscripcioneService.inscribirse(inscripcioneDTO.getEvento(), (Integer)session.getAttribute("usuarioId"));
+        redirectAttributes.addFlashAttribute("mensaje", respuesta);
+        return "redirect:/eventos/detalles/" + inscripcioneDTO.getEvento(); // Asegúrate de que la ruta sea correcta
+    }
+
+
 
 }

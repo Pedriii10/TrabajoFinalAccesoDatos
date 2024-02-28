@@ -48,7 +48,7 @@
                     <p><strong>Correo Electrónico:</strong> <span th:text="${user.correoElectronico}"></span></p>
                     <p><strong>Fecha de Registro:</strong> <span th:text="${user.fechaRegistro}"></span></p>
                     <p><strong>Descripción:</strong> <span th:text="${user.descripcion}">N/A</span></p>
-                    <a th:href="@{'/index/verEventos/' + ${user.usuarioId}}" class="btn btn-primary">Ver más</a>
+                    <a th:href="@{/index/verEventos/{usuarioId}(usuarioId=${user.usuarioId})}" class="btn btn-primary">Ver mis Eventos</a>
                 </div>
             </div>
         </div>

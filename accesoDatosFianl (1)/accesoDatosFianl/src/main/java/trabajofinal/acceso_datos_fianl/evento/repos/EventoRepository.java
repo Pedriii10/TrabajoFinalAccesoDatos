@@ -17,4 +17,5 @@ public interface EventoRepository extends JpaRepository<Evento, Integer> {
     List<Evento> buscarPorOrganizador(@Param("usuarioId") Integer usuarioId);
 
 
+
 }

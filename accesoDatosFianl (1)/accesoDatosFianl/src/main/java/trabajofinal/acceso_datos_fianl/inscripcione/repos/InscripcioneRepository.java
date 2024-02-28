@@ -12,4 +12,5 @@ public interface InscripcioneRepository extends JpaRepository<Inscripcione, Inte
 
     Inscripcione findFirstByEvento(Evento evento);
 
+    boolean existsByEventoAndUsuario(Evento evento, Usuario usuario);
 }

@@ -107,9 +107,4 @@ public class EventoController {
         return "evento/misEventos"; // Asegúrate de que la ruta a la plantilla sea correcta
     }
 
-
-
-
-
-
 }
