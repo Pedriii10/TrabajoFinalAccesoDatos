@@ -2,7 +2,6 @@ package trabajofinal.acceso_datos_fianl.evento.service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import trabajofinal.acceso_datos_fianl.entrada.domain.Entrada;

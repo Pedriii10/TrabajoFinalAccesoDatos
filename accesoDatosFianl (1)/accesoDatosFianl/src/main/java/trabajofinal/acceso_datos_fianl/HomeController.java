@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import trabajofinal.acceso_datos_fianl.evento.domain.Evento;
 import trabajofinal.acceso_datos_fianl.evento.service.EventoService;
+import trabajofinal.acceso_datos_fianl.inscripcione.service.InscripcioneService;
 import trabajofinal.acceso_datos_fianl.usuario.domain.Usuario;
 import trabajofinal.acceso_datos_fianl.usuario.model.UsuarioDTO;
 import trabajofinal.acceso_datos_fianl.usuario.repos.UsuarioRepository;
@@ -32,6 +33,8 @@ public class HomeController {
     private UsuarioRepository usuarioRepository;
     @Autowired
     private EventoService eventoService;
+
+    private InscripcioneService inscripcioneService;
 
     public HomeController(UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
         this.usuarioService = usuarioService;
@@ -114,6 +117,12 @@ public class HomeController {
         // Utiliza el usuarioId para buscar eventos organizados por este usuario
         model.addAttribute("eventos", eventoService.findAllByOrganizadorId(usuarioId));
         return "home/misEventos"; // Asegúrate de que la vista 'home/misEventos' exista y esté configurada correctamente
+    }
+
+    @GetMapping("/index/misInscripciones/{usuarioId}")
+    public String verInscripcionesPorUsuario(@PathVariable Integer usuarioId, Model model) {
+        model.addAttribute("inscripciones", inscripcioneService.findByUsuarioId(usuarioId));
+        return "home/misInscripciones";
     }
 
 

@@ -106,4 +106,12 @@ public class InscripcioneService {
     }
 
 
+    public List<InscripcioneDTO> findByUsuarioId(Integer usuarioId) {
+        final List<Inscripcione> inscripcionesUsuario = inscripcioneRepository.findByUsuarioUsuarioId(usuarioId);
+
+        return inscripcionesUsuario.stream()
+                .map(inscripcione -> mapToDTO(inscripcione, new InscripcioneDTO()))
+                .toList();
+    }
+
 }

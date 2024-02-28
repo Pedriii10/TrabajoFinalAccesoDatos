@@ -62,13 +62,17 @@ public class InscripcioneController {
 
     @PostMapping("/add")
     public String add(@ModelAttribute("inscripcione") @Valid final InscripcioneDTO inscripcioneDTO,
-            final BindingResult bindingResult, final RedirectAttributes redirectAttributes) {
+            final BindingResult bindingResult, final RedirectAttributes redirectAttributes, final Model model) {
         if (bindingResult.hasErrors()) {
             return "inscripcione/add";
         }
+
+        Usuario u = (Usuario) model.getAttribute("user");
+        assert u != null;
+        inscripcioneDTO.setUsuario(u.getUsuarioId());
         inscripcioneService.create(inscripcioneDTO);
         redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("inscripcione.create.success"));
-        return "redirect:/eventoData";
+        return "redirect:/index";
     }
 
     @GetMapping("/edit/{inscripcionId}")
@@ -111,20 +115,27 @@ public class InscripcioneController {
         return "inscripcione/add";
     }
 
-    @PostMapping("/inscripciones/add")
+   /* @PostMapping("/add")
     public String procesarInscripcion(@ModelAttribute("inscripcione") InscripcioneDTO inscripcioneDTO,
-                                      BindingResult result, HttpSession session, RedirectAttributes redirectAttributes, final Model model) {
+                                      BindingResult result, HttpSession session, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
-            return "home/eventoData";
+            // Si hay errores, incluye 'eventoId' en los atributos de redirección
+            redirectAttributes.addAttribute("eventoId", inscripcioneDTO.getEvento());
+            return "redirect:/home/eventoData/{eventoId}";
         }
 
-        Usuario u = (Usuario) model.getAttribute("user");
+        Usuario u = (Usuario) session.getAttribute("user");
         assert u != null;
         inscripcioneDTO.setUsuario(u.getUsuarioId());
-        String respuesta = inscripcioneService.inscribirse(inscripcioneDTO.getEvento(), (Integer)session.getAttribute("usuarioId"));
+        String respuesta = inscripcioneService.inscribirse(inscripcioneDTO.getEvento(), u.getUsuarioId());
         redirectAttributes.addFlashAttribute("mensaje", respuesta);
-        return "redirect:/eventos/detalles/" + inscripcioneDTO.getEvento(); // Asegúrate de que la ruta sea correcta
-    }
+
+        // Incluye 'eventoId' en los atributos de redirección para asegurar que esté disponible en la URL
+        redirectAttributes.addAttribute("eventoId", inscripcioneDTO.getEvento());
+        return "redirect:/home/index";
+    } */
+
+
 
 
 

@@ -10,16 +10,15 @@
                 <h1 class="flex-grow-1">[[#{inscripcione.add.headline}]]</h1>
                 <div>
                     <a th:href="@{/inscripciones}" class="btn btn-secondary">[[#{inscripcione.add.back}]]</a>
+
                 </div>
             </div>
             <div th:replace="~{fragments/forms::globalErrors('inscripcione')}" />
             <form th:action="@{/inscripciones/add}" method="post">
                 <div th:replace="~{fragments/forms::inputRow(object='inscripcione', field='fechaInscripcion', required=true, inputClass='js-datepicker')}" />
                 <div th:replace="~{fragments/forms::inputRow(object='inscripcione', field='estado', required=true)}" />
-                <!-- <div th:replace="~{fragments/forms::inputRow(object='inscripcione', field='usuario', required=true, type='select')}" />
-                <div th:replace="~{fragments/forms::inputRow(object='inscripcione', field='evento', required=true, type='select')}" />-->
+                <div th:replace="~{fragments/forms::inputRow(object='inscripcione', field='evento', required=true, type='select')}" />
                 <input type="hidden" name="usuario" value="0">
-                <input type="hidden" name="evento" value="${evento.eventoId}">
                 <input type="submit" th:value="#{inscripcione.add.headline}" class="btn btn-primary mt-4" />
             </form>
         </div>
