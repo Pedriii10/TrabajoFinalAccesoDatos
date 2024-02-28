@@ -1,19 +1,58 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}" lang="en">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Mis Inscripciones</title>
+    <style>
+        .card-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 16px;
+            width: calc(50% - 20px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: #fff;
+        }
+
+        .card h3 {
+            color: #333;
+            margin-top: 0;
+        }
+
+        .card p {
+            color: #666;
+        }
+
+        .card .button {
+            display: inline-block;
+            padding: 10px 15px;
+            text-align: center;
+            background-color: #007bff;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+            margin-top: 15px;
+        }
+    </style>
 </head>
 <body>
-    <div layout:fragment="content">
-        <!-- Dentro de misInscripciones.html -->
-        <div th:if="${inscripciones.empty}">No estás inscrito en ningún evento aún.</div>
-        <div th:if="${!inscripciones.empty}">
-            <div th:each="inscripcion : ${inscripciones}" class="inscripcion">
-                <!-- Mostrar detalles de la inscripción aquí -->
-            </div>
-        </div>
-
+<div layout:fragment="content">
+    <h1>Mis Inscripciones</h1>
+    <div th:if="${inscripciones.empty}">
+        <p>No te has inscrito en nada todavía.</p>
     </div>
+    <div class="card-container" th:if="${!inscripciones.empty}">
+        <div th:each="inscripcion : ${inscripciones}" class="card">
+            <p th:text="'Fecha de Inscripción: ' + ${inscripcion.fechaInscripcion}">Fecha de Inscripción</p>
+            <p class="estado" th:text="'Estado: ' + ${inscripcion.estado}">Estado</p>
+        </div>
+    </div>
+</div>
 </body>
 </html>

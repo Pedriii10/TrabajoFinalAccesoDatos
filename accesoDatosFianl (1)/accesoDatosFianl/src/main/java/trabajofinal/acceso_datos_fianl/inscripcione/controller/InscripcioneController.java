@@ -15,13 +15,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import trabajofinal.acceso_datos_fianl.evento.domain.Evento;
+import trabajofinal.acceso_datos_fianl.evento.model.EventoDTO;
 import trabajofinal.acceso_datos_fianl.evento.repos.EventoRepository;
+import trabajofinal.acceso_datos_fianl.inscripcione.domain.Inscripcione;
 import trabajofinal.acceso_datos_fianl.inscripcione.model.InscripcioneDTO;
+import trabajofinal.acceso_datos_fianl.inscripcione.repos.InscripcioneRepository;
 import trabajofinal.acceso_datos_fianl.inscripcione.service.InscripcioneService;
 import trabajofinal.acceso_datos_fianl.usuario.domain.Usuario;
 import trabajofinal.acceso_datos_fianl.usuario.repos.UsuarioRepository;
 import trabajofinal.acceso_datos_fianl.util.CustomCollectors;
 import trabajofinal.acceso_datos_fianl.util.WebUtils;
+
+import java.util.List;
 
 
 @Controller
@@ -29,12 +34,14 @@ import trabajofinal.acceso_datos_fianl.util.WebUtils;
 public class InscripcioneController {
 
     private final InscripcioneService inscripcioneService;
+    private final InscripcioneRepository inscripcioneRepository;
     private final UsuarioRepository usuarioRepository;
     private final EventoRepository eventoRepository;
 
-    public InscripcioneController(final InscripcioneService inscripcioneService,
-            final UsuarioRepository usuarioRepository, final EventoRepository eventoRepository) {
+    public InscripcioneController(final InscripcioneService inscripcioneService, InscripcioneRepository inscripcioneRepository,
+                                  final UsuarioRepository usuarioRepository, final EventoRepository eventoRepository) {
         this.inscripcioneService = inscripcioneService;
+        this.inscripcioneRepository = inscripcioneRepository;
         this.usuarioRepository = usuarioRepository;
         this.eventoRepository = eventoRepository;
     }
@@ -54,6 +61,7 @@ public class InscripcioneController {
         model.addAttribute("inscripciones", inscripcioneService.findAll());
         return "inscripcione/list";
     }
+
 
     @GetMapping("/add")
     public String add(@ModelAttribute("inscripcione") final InscripcioneDTO inscripcioneDTO) {
@@ -134,6 +142,7 @@ public class InscripcioneController {
         redirectAttributes.addAttribute("eventoId", inscripcioneDTO.getEvento());
         return "redirect:/home/index";
     } */
+
 
 
 

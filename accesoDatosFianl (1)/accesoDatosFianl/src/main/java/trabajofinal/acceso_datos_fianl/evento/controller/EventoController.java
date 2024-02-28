@@ -107,7 +107,7 @@ public class EventoController {
     public String verMisEventos(@PathVariable("usuarioId") Integer usuarioId, Model model) {
         List<Evento> eventosDelUsuario = eventoRepository.buscarPorOrganizador(usuarioId);
         model.addAttribute("eventos", eventosDelUsuario);
-        return "evento/misEventos"; // Asegúrate de que la ruta a la plantilla sea correcta
+        return "home/misEventos"; // Asegúrate de que la ruta a la plantilla sea correcta
     }
 
 }

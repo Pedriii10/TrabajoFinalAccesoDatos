@@ -2,6 +2,7 @@ package trabajofinal.acceso_datos_fianl;
 
 import ch.qos.logback.core.LayoutBase;
 import jakarta.servlet.http.HttpSession;
+import jakarta.transaction.Transactional;
 import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import trabajofinal.acceso_datos_fianl.evento.domain.Evento;
 import trabajofinal.acceso_datos_fianl.evento.service.EventoService;
+import trabajofinal.acceso_datos_fianl.inscripcione.domain.Inscripcione;
+import trabajofinal.acceso_datos_fianl.inscripcione.repos.InscripcioneRepository;
 import trabajofinal.acceso_datos_fianl.inscripcione.service.InscripcioneService;
 import trabajofinal.acceso_datos_fianl.usuario.domain.Usuario;
 import trabajofinal.acceso_datos_fianl.usuario.model.UsuarioDTO;
@@ -23,12 +26,14 @@ import trabajofinal.acceso_datos_fianl.usuario.repos.UsuarioRepository;
 import trabajofinal.acceso_datos_fianl.usuario.service.UsuarioService;
 
 import java.util.Base64;
+import java.util.List;
 
 
 @Controller
 public class HomeController {
 
     private final UsuarioService usuarioService;
+    private final InscripcioneRepository inscripcioneRepository;
 
     private UsuarioRepository usuarioRepository;
     @Autowired
@@ -36,8 +41,9 @@ public class HomeController {
 
     private InscripcioneService inscripcioneService;
 
-    public HomeController(UsuarioService usuarioService, UsuarioRepository usuarioRepository) {
+    public HomeController(UsuarioService usuarioService, InscripcioneRepository inscripcioneRepository, UsuarioRepository usuarioRepository) {
         this.usuarioService = usuarioService;
+        this.inscripcioneRepository = inscripcioneRepository;
         this.usuarioRepository = usuarioRepository;
     }
 
@@ -120,8 +126,11 @@ public class HomeController {
     }
 
     @GetMapping("/index/misInscripciones/{usuarioId}")
-    public String verInscripcionesPorUsuario(@PathVariable Integer usuarioId, Model model) {
-        model.addAttribute("inscripciones", inscripcioneService.findByUsuarioId(usuarioId));
+    @Transactional
+    public String verMisInscripciones(@PathVariable("usuarioId") Integer usuarioId, Model model){
+        List<Inscripcione> inscripcionesUsuario = inscripcioneRepository.findByUsuarioUsuarioId(usuarioId);
+        model.addAttribute("inscripciones", inscripcionesUsuario);
+        model.addAttribute("eventos", eventoService.findAllByOrganizadorId(usuarioId));
         return "home/misInscripciones";
     }
 
