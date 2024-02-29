@@ -17,7 +17,7 @@
             <form th:action="@{/inscripciones/add}" method="post">
                 <div th:replace="~{fragments/forms::inputRow(object='inscripcione', field='fechaInscripcion', required=true, inputClass='js-datepicker')}" />
                 <div th:replace="~{fragments/forms::inputRow(object='inscripcione', field='estado', required=true)}" />
-                <div th:replace="~{fragments/forms::inputRow(object='inscripcione', field='evento', required=true, type='select')}" />
+                <input type="hidden" name="evento" th:value="${evento.eventoId}">
                 <input type="hidden" name="usuario" value="0">
                 <input type="submit" th:value="#{inscripcione.add.headline}" class="btn btn-primary mt-4" />
             </form>

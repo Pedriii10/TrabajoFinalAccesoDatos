@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import trabajofinal.acceso_datos_fianl.evento.domain.Evento;
 import trabajofinal.acceso_datos_fianl.evento.model.EventoDTO;
 import trabajofinal.acceso_datos_fianl.evento.repos.EventoRepository;
+import trabajofinal.acceso_datos_fianl.evento.service.EventoService;
 import trabajofinal.acceso_datos_fianl.inscripcione.domain.Inscripcione;
 import trabajofinal.acceso_datos_fianl.inscripcione.model.InscripcioneDTO;
 import trabajofinal.acceso_datos_fianl.inscripcione.repos.InscripcioneRepository;
@@ -38,12 +39,15 @@ public class InscripcioneController {
     private final UsuarioRepository usuarioRepository;
     private final EventoRepository eventoRepository;
 
+    private final EventoService eventoService;
+
     public InscripcioneController(final InscripcioneService inscripcioneService, InscripcioneRepository inscripcioneRepository,
-                                  final UsuarioRepository usuarioRepository, final EventoRepository eventoRepository) {
+                                  final UsuarioRepository usuarioRepository, final EventoRepository eventoRepository, EventoService eventoService) {
         this.inscripcioneService = inscripcioneService;
         this.inscripcioneRepository = inscripcioneRepository;
         this.usuarioRepository = usuarioRepository;
         this.eventoRepository = eventoRepository;
+        this.eventoService = eventoService;
     }
 
     @ModelAttribute
@@ -111,7 +115,7 @@ public class InscripcioneController {
     }
 
     @GetMapping("/add/{eventoId}")
-    public String mostrarFormularioInscripcion(@PathVariable("eventoId") Integer eventoId, Model model, HttpSession session) {
+    public String mostrarFormularioInscripcion(@PathVariable("eventoId") Integer eventoId, @PathVariable("eventoId") Long id, Model model, HttpSession session) {
         Integer usuarioId = (Integer) session.getAttribute("usuarioId");
         Evento evento = eventoRepository.findById(eventoId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Evento no encontrado"));
@@ -120,6 +124,7 @@ public class InscripcioneController {
             return "evento/eventoData"; // o la vista que muestre el mensaje
         }
         model.addAttribute("inscripcione", new InscripcioneDTO());
+        model.addAttribute("evento", eventoService.buscarPorId(id));
         return "inscripcione/add";
     }
 
