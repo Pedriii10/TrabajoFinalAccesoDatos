@@ -4,7 +4,6 @@
 <head>
     <title>Detalles del Evento</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <script src="./consultaApi.js" defer></script>
     <link th:href="@{/css/verMas.css}" rel="stylesheet" />
     <!-- Agregar enlaces a CSS y otros recursos según sea necesario -->
 
@@ -29,17 +28,6 @@
         <a th:if="${evento.organizador.usuarioId == user.usuarioId}"
            th:href="@{'/verParticipantes/' + ${evento.eventoId}}"
            class="btn btn-secondary">Ver Participantes</a>
-        <!-- <button id="consultarTiempoBtn" class="btn-consultar-tiempo"
-                th:attr="data-fechaInicio=${evento.fechaInicio}, data-ubicacion=${evento.ubicacion}">
-            Consultar Tiempo
-        </button>
-        <div class="tiempo-detalle">
-            <h2>Detalles del Tiempo</h2>
-            <p>Temperatura Máxima: <span id="maxtemp_c"></span></p>
-            <p>Temperatura Mínima: <span id="mintemp_c"></span></p>
-            <p>Condición: <span id="condition_text"></span></p>
-            <img id="condition_icon" src="" alt="Icono de condición del clima" class="tiempo-icono">
-        </div> -->
     </div>
 </div>
 </body>

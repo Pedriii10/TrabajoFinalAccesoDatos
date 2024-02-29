@@ -234,9 +234,10 @@ public class HomeController {
      * @return Nombre de la vista que muestra los participantes del evento.
      */
     @GetMapping("/verParticipantes/{eventoId}")
-    public String verParticipantes(@PathVariable("eventoId") Integer eventoId, Model model) {
+    public String verParticipantes(@PathVariable("eventoId") Integer eventoId, @PathVariable("eventoId") Long id, Model model){
         List<Inscripcione> misInscripcionesDelEvento = inscripcioneRepository.findByEventoEventoId(eventoId);
         model.addAttribute("inscripciones", misInscripcionesDelEvento);
+        model.addAttribute("evento", eventoService.buscarPorId(id));
         return "home/verParticipantes";
     }
 }

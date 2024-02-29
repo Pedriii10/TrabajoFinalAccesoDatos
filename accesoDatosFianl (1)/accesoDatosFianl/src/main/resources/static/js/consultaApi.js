@@ -2,10 +2,13 @@ document.getElementById("consultarTiempoBtn").addEventListener("click", function
     var fechaInicio = this.getAttribute("data-fechaInicio");
     var ubicacion = this.getAttribute("data-ubicacion");
 
-    var apiKey = "8c72b0285d914027b0891804242702";
-    var apiUrl = "https://api.weatherapi.com/v1/forecast.json?key=" + apiKey + "&q=" + ubicacion + "&dt=" + fechaInicio + "&lang=es";
 
-    fetch(apiUrl)
+
+    var apiKey = "8c72b0285d914027b0891804242702";
+    var apiUrl = "https://api.weatherapi.com/v1/forecast.json?key=8c72b0285d914027b0891804242702&q=Elche&dt=2024-02-28&lang=es";
+
+    console.log("dsadsa");
+   /* fetch(apiUrl)
         .then(response => response.json())
         .then(data => {
             var forecast = data.forecast.forecastday[0].day;
@@ -17,5 +20,5 @@ document.getElementById("consultarTiempoBtn").addEventListener("click", function
         })
         .catch(error => {
             console.error('Error al consultar el tiempo:', error);
-        });
+        });*/
 });

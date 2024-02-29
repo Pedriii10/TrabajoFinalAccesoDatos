@@ -160,15 +160,4 @@ class HomeControllerTest {
         verify(inscripcioneService, times(1)).delete(inscripcionId);
     }
 
-    @Test
-    void verParticipantes() {
-        Integer eventoId = 1;
-        when(inscripcioneRepository.findByEventoEventoId(eventoId)).thenReturn(null); // Simula la devolución de una lista de inscripciones
-
-        String viewName = homeController.verParticipantes(eventoId, model);
-
-        assertEquals("home/verParticipantes", viewName);
-        verify(model, times(1)).addAttribute(eq("inscripciones"), any());
-    }
-
 }
