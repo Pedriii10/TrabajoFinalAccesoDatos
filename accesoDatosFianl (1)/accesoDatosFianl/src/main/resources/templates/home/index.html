@@ -3,31 +3,8 @@
 <head>
     <title>[[#{home.index.headline}]]</title>
     <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <style>
-        .card {
-            /* Ajustes para hacer la tarjeta un poco más ancha */
-            width: 100%; /* Ajustar según sea necesario */
-        }
-        .card-title {
-            text-align: center;
-            margin-bottom: 15px; /* Espacio después del título */
-        }
-        .descripcion {
-            font-size: 0.8em; /* Ajustar según sea necesario */
-            margin-bottom: 10px; /* Espacio antes de la ubicación */
-        }
-        .ubicacion a {
-            font-weight: bold;
-            text-decoration: none;
-            display: block; /* Hace que el enlace llene toda la línea */
-            margin-bottom: 5px; /* Espacio antes de las fechas */
-        }
-        .fecha {
-            font-size: 0.7em; /* Ajustar según sea necesario */
-            text-align: left; /* Alinea las fechas a la izquierda */
-            margin-bottom: 2px; /* Reduce el espacio entre las fechas */
-        }
-    </style>
+    <link th:href="@{/css/index.css}" rel="stylesheet" />
+
 </head>
 <body>
 <div layout:fragment="content">

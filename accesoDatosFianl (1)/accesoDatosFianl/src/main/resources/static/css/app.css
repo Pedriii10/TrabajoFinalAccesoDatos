@@ -1,0 +1,43 @@
+/* Estilos base */
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Estilo del header */
+header {
+    background-color: #fff; /* Fondo blanco para un aspecto limpio */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Sombra sutil para darle profundidad */
+    padding: 1.5rem 0; /* Espaciado vertical aumentado */
+}
+
+/* Estilo de la barra de navegación */
+.navbar {
+    padding: 0 1rem; /* Reducir el padding lateral */
+}
+
+.navbar-brand {
+    font-weight: bold; /* Hacer que la marca sea más notoria */
+    font-size: 1.5rem; /* Aumentar el tamaño de la fuente */
+}
+
+.navbar-nav .nav-link {
+    padding: 0.5rem 1rem; /* Ajustar el padding */
+    font-weight: 500; /* Hacer los enlaces un poco más gruesos */
+}
+
+.navbar-toggler {
+    border: none; /* Remover el borde del botón del toggler */
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba(0, 0, 0, 0.5)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E"); /* Icono personalizado para el toggler */
+}
+
+/* Ajustes para dispositivos móviles */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 0.5rem 1rem; /* Reducir aún más el padding en móviles */
+    }
+}
