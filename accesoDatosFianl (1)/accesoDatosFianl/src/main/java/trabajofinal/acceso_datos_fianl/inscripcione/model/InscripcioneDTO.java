@@ -7,7 +7,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-
+/**
+ * InscripcioneDTO es un objeto de transferencia de datos (DTO) que representa
+ * la información de una inscripción a un evento en el sistema.
+ */
 @Getter
 @Setter
 @ToString

@@ -14,7 +14,9 @@ import trabajofinal.acceso_datos_fianl.evento.domain.Evento;
 import trabajofinal.acceso_datos_fianl.inscripcione.domain.Inscripcione;
 import trabajofinal.acceso_datos_fianl.resena.domain.Resena;
 
-
+/**
+ * Clase que representa la entidad Usuario en la base de datos.
+ */
 @Entity
 @Table(name = "Usuarios")
 @EntityListeners(AuditingEntityListener.class)

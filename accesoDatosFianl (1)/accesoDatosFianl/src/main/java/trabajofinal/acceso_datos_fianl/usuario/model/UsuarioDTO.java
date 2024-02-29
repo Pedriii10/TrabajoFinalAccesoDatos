@@ -6,7 +6,9 @@ import java.time.LocalDate;
 import lombok.Getter;
 import lombok.Setter;
 
-
+/**
+ * Clase que representa el modelo de datos de un usuario utilizado para transferencia de datos.
+ */
 @Getter
 @Setter
 public class UsuarioDTO {

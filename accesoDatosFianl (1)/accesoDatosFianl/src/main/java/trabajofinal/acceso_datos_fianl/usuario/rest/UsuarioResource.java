@@ -19,34 +19,60 @@ import trabajofinal.acceso_datos_fianl.usuario.service.UsuarioService;
 import trabajofinal.acceso_datos_fianl.util.ReferencedException;
 import trabajofinal.acceso_datos_fianl.util.ReferencedWarning;
 
-
+/**
+ * Controlador REST que maneja las solicitudes relacionadas con los usuarios.
+ */
 @RestController
 @RequestMapping(value = "/api/usuarios", produces = MediaType.APPLICATION_JSON_VALUE)
 public class UsuarioResource {
 
     private final UsuarioService usuarioService;
-
+    /**
+     * Constructor de la clase.
+     *
+     * @param usuarioService El servicio de usuarios a inyectar.
+     */
     public UsuarioResource(final UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
     }
-
+    /**
+     * Maneja las solicitudes GET para obtener todos los usuarios.
+     *
+     * @return ResponseEntity con la lista de usuarios y el código de estado HTTP OK.
+     */
     @GetMapping
     public ResponseEntity<List<UsuarioDTO>> getAllUsuarios() {
         return ResponseEntity.ok(usuarioService.findAll());
     }
-
+    /**
+     * Maneja las solicitudes GET para obtener un usuario por su ID.
+     *
+     * @param usuarioId El ID del usuario a buscar.
+     * @return ResponseEntity con el usuario encontrado y el código de estado HTTP OK.
+     */
     @GetMapping("/{usuarioId}")
     public ResponseEntity<UsuarioDTO> getUsuario(
             @PathVariable(name = "usuarioId") final Integer usuarioId) {
         return ResponseEntity.ok(usuarioService.get(usuarioId));
     }
-
+    /**
+     * Maneja las solicitudes POST para crear un nuevo usuario.
+     *
+     * @param usuarioDTO Los datos del usuario a crear.
+     * @return ResponseEntity con el ID del usuario creado y el código de estado HTTP CREATED.
+     */
     @PostMapping
     public ResponseEntity<Integer> createUsuario(@RequestBody @Valid final UsuarioDTO usuarioDTO) {
         final Integer createdUsuarioId = usuarioService.create(usuarioDTO);
         return new ResponseEntity<>(createdUsuarioId, HttpStatus.CREATED);
     }
-
+    /**
+     * Maneja las solicitudes PUT para actualizar un usuario existente.
+     *
+     * @param usuarioId  El ID del usuario a actualizar.
+     * @param usuarioDTO Los nuevos datos del usuario.
+     * @return ResponseEntity con el ID del usuario actualizado y el código de estado HTTP OK.
+     */
     @PutMapping("/{usuarioId}")
     public ResponseEntity<Integer> updateUsuario(
             @PathVariable(name = "usuarioId") final Integer usuarioId,
@@ -54,7 +80,13 @@ public class UsuarioResource {
         usuarioService.update(usuarioId, usuarioDTO);
         return ResponseEntity.ok(usuarioId);
     }
-
+    /**
+     * Maneja las solicitudes DELETE para eliminar un usuario.
+     *
+     * @param usuarioId El ID del usuario a eliminar.
+     * @return ResponseEntity con el código de estado HTTP NO_CONTENT si se elimina con éxito.
+     * @throws ReferencedException Si hay una referencia al usuario en otras entidades.
+     */
     @DeleteMapping("/{usuarioId}")
     public ResponseEntity<Void> deleteUsuario(
             @PathVariable(name = "usuarioId") final Integer usuarioId) {
@@ -66,11 +98,7 @@ public class UsuarioResource {
         return ResponseEntity.noContent().build();
     }
 
-    // Método de inicio de sesión agregado
 
-
-
-    // Clase interna para solicitudes de inicio de sesión
     static class LoginRequest {
         private String correo;
         private String contrasena;

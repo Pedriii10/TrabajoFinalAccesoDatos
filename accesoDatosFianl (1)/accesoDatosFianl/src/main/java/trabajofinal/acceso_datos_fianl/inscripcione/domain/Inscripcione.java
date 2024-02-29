@@ -20,7 +20,11 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import trabajofinal.acceso_datos_fianl.evento.domain.Evento;
 import trabajofinal.acceso_datos_fianl.usuario.domain.Usuario;
 
-
+/**
+ * Inscripcione representa una inscripción a un evento en el sistema.
+ * Contiene información sobre la fecha de inscripción, el estado de la inscripción,
+ * el usuario que realizó la inscripción y el evento al que se inscribió.
+ */
 @Entity
 @Table(name = "Inscripciones")
 @EntityListeners(AuditingEntityListener.class)
