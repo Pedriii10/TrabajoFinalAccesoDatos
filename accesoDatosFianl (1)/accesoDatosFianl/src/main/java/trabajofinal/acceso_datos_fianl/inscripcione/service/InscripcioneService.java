@@ -114,4 +114,12 @@ public class InscripcioneService {
                 .toList();
     }
 
+    public List<InscripcioneDTO> findByEventoEventoId(Integer eventoId) {
+        final List<Inscripcione> inscripcionesEvento = inscripcioneRepository.findByEventoEventoId((eventoId));
+
+        return inscripcionesEvento.stream()
+                .map(inscripcione -> mapToDTO(inscripcione, new InscripcioneDTO()))
+                .toList();
+    }
+
 }

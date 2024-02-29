@@ -143,6 +143,14 @@ public class HomeController {
         return "home/perfil";
     }
 
+    @GetMapping("/verParticipantes/{eventoId}")
+    public String verParticipantes(@PathVariable("eventoId") Integer eventoId, @PathVariable("eventoId") Long id, Model model){
+        List<Inscripcione> misInscripcionesDelEvento = inscripcioneRepository.findByEventoEventoId(eventoId);
+        model.addAttribute("inscripciones", misInscripcionesDelEvento);
+        model.addAttribute("evento", eventoService.buscarPorId(id));
+        return "home/verParticipantes";
+    }
+
 
 
 }

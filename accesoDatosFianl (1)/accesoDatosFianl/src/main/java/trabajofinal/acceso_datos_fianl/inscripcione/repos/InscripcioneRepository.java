@@ -20,5 +20,6 @@ public interface InscripcioneRepository extends JpaRepository<Inscripcione, Inte
     @EntityGraph(attributePaths = {"usuario", "evento"})
     List<Inscripcione> findByUsuarioUsuarioId(Integer usuarioId);
 
-
+    @EntityGraph(attributePaths = {"usuario", "evento"})
+    List<Inscripcione> findByEventoEventoId(Integer eventoId);
 }

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout}" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div layout:fragment="content">
+        <h1>Inscripciones del evento <span th:text="${evento.nombre}"></span></h1>
+        <div th:if="${inscripciones.empty}">
+            <p>No te has inscrito en nada todavía.</p>
+        </div>
+        <div class="card-container" th:if="${!inscripciones.empty}">
+            <div th:each="inscripcion : ${inscripciones}" class="card">
+                <p class="estado" th:text="'Nombre de la persona Inscrita: ' + ${inscripcion.usuario.nombre}">Nombre</p>
+                <p th:text="'Fecha de Inscripción: ' + ${inscripcion.fechaInscripcion}">Fecha de Inscripción</p>
+                <p class="estado" th:text="'Estado: ' + ${inscripcion.estado}">Estado</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

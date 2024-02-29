@@ -83,7 +83,14 @@
             <p>Es gratis: <span th:text="${evento.esGratis}"></span></p>
             <p>Es en exterior: <span th:text="${evento.esExterior}"></span></p>
         </div>
-        <a th:if="${evento.organizador.usuarioId != user.usuarioId}" th:href="@{'/inscripciones/add/' + ${evento.eventoId}}" class="btn btn-primary">Inscribirse</a>
+        <a th:if="${evento.organizador.usuarioId != user.usuarioId}"
+           th:href="@{'/inscripciones/add/' + ${evento.eventoId}}"
+           class="btn btn-primary">Inscribirse</a>
+
+        <!-- Botón para el organizador del evento -->
+        <a th:if="${evento.organizador.usuarioId == user.usuarioId}"
+           th:href="@{'/verParticipantes/' + ${evento.eventoId}}"
+           class="btn btn-secondary">Ver Participantes</a>
         <!-- <button id="consultarTiempoBtn" class="btn-consultar-tiempo"
                 th:attr="data-fechaInicio=${evento.fechaInicio}, data-ubicacion=${evento.ubicacion}">
             Consultar Tiempo
