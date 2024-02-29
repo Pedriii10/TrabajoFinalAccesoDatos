@@ -20,7 +20,6 @@ import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import trabajofinal.acceso_datos_fianl.entrada.domain.Entrada;
 import trabajofinal.acceso_datos_fianl.fotos_evento.domain.FotosEvento;
 import trabajofinal.acceso_datos_fianl.inscripcione.domain.Inscripcione;
 import trabajofinal.acceso_datos_fianl.resena.domain.Resena;
@@ -76,8 +75,6 @@ public class Evento {
     @OneToMany(mappedBy = "evento")
     private Set<FotosEvento> eventoFotosEventoes;
 
-    @OneToMany(mappedBy = "evento")
-    private Set<Entrada> eventoEntradas;
 
     @OneToMany(mappedBy = "evento")
     private Set<Resena> eventoResenas;

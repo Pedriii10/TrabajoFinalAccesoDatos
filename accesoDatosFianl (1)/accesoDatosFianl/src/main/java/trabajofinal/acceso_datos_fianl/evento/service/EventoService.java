@@ -4,8 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import trabajofinal.acceso_datos_fianl.entrada.domain.Entrada;
-import trabajofinal.acceso_datos_fianl.entrada.repos.EntradaRepository;
+
 import trabajofinal.acceso_datos_fianl.evento.domain.Evento;
 import trabajofinal.acceso_datos_fianl.evento.model.EventoDTO;
 import trabajofinal.acceso_datos_fianl.evento.repos.EventoRepository;
@@ -28,7 +27,7 @@ public class EventoService {
     private final UsuarioRepository usuarioRepository;
     private final InscripcioneRepository inscripcioneRepository;
     private final FotosEventoRepository fotosEventoRepository;
-    private final EntradaRepository entradaRepository;
+
     private final ResenaRepository resenaRepository;
 
 
@@ -36,13 +35,11 @@ public class EventoService {
     public EventoService(final EventoRepository eventoRepository,
             final UsuarioRepository usuarioRepository,
             final InscripcioneRepository inscripcioneRepository,
-            final FotosEventoRepository fotosEventoRepository,
-            final EntradaRepository entradaRepository, final ResenaRepository resenaRepository) {
+            final FotosEventoRepository fotosEventoRepository, final ResenaRepository resenaRepository) {
         this.eventoRepository = eventoRepository;
         this.usuarioRepository = usuarioRepository;
         this.inscripcioneRepository = inscripcioneRepository;
         this.fotosEventoRepository = fotosEventoRepository;
-        this.entradaRepository = entradaRepository;
         this.resenaRepository = resenaRepository;
     }
 
@@ -139,12 +136,7 @@ public class EventoService {
             referencedWarning.addParam(eventoFotosEvento.getFotoId());
             return referencedWarning;
         }
-        final Entrada eventoEntrada = entradaRepository.findFirstByEvento(evento);
-        if (eventoEntrada != null) {
-            referencedWarning.setKey("evento.entrada.evento.referenced");
-            referencedWarning.addParam(eventoEntrada.getEntradaId());
-            return referencedWarning;
-        }
+
         final Resena eventoResena = resenaRepository.findFirstByEvento(evento);
         if (eventoResena != null) {
             referencedWarning.setKey("evento.resena.evento.referenced");
