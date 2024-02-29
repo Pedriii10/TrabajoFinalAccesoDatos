@@ -1,5 +1,6 @@
 package trabajofinal.acceso_datos_fianl.inscripcione.repos;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import trabajofinal.acceso_datos_fianl.evento.domain.Evento;
 import trabajofinal.acceso_datos_fianl.inscripcione.domain.Inscripcione;
@@ -16,6 +17,7 @@ public interface InscripcioneRepository extends JpaRepository<Inscripcione, Inte
 
     boolean existsByEventoAndUsuario(Evento evento, Usuario usuario);
 
+    @EntityGraph(attributePaths = {"usuario", "evento"})
     List<Inscripcione> findByUsuarioUsuarioId(Integer usuarioId);
 
 

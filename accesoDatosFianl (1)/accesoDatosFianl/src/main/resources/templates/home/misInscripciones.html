@@ -51,6 +51,7 @@
         <div th:each="inscripcion : ${inscripciones}" class="card">
             <p th:text="'Fecha de Inscripción: ' + ${inscripcion.fechaInscripcion}">Fecha de Inscripción</p>
             <p class="estado" th:text="'Estado: ' + ${inscripcion.estado}">Estado</p>
+            <p class="estado" th:text="'Evento: ' + ${inscripcion.evento.nombre}">Evento</p>
         </div>
     </div>
 </div>
