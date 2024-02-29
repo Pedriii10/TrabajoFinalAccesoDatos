@@ -49,9 +49,11 @@
     </div>
     <div class="card-container" th:if="${!inscripciones.empty}">
         <div th:each="inscripcion : ${inscripciones}" class="card">
+            <p th:text="'Fecha de Inscripción: ' + ${inscripcion.inscripcionId}">Fecha de Inscripción</p>
             <p th:text="'Fecha de Inscripción: ' + ${inscripcion.fechaInscripcion}">Fecha de Inscripción</p>
             <p class="estado" th:text="'Estado: ' + ${inscripcion.estado}">Estado</p>
             <p class="estado" th:text="'Evento: ' + ${inscripcion.evento.nombre}">Evento</p>
+            <a th:href="@{/index/cancelarInscripcion/{inscripcionId}(inscripcionId=${inscripcion.inscripcionId})}" class="btn btn-primary">Cancelar Inscripcion</a>
         </div>
     </div>
 </div>

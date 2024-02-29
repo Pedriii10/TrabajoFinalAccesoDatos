@@ -39,12 +39,15 @@ public class HomeController {
     @Autowired
     private EventoService eventoService;
 
-    private InscripcioneService inscripcioneService;
+    @Autowired
+    private InscripcioneService inscripcioneService; // Asegúrate de que esta línea esté presente
 
-    public HomeController(UsuarioService usuarioService, InscripcioneRepository inscripcioneRepository, UsuarioRepository usuarioRepository) {
+
+    public HomeController(UsuarioService usuarioService, InscripcioneRepository inscripcioneRepository, UsuarioRepository usuarioRepository, InscripcioneService inscripcioneService) {
         this.usuarioService = usuarioService;
         this.inscripcioneRepository = inscripcioneRepository;
         this.usuarioRepository = usuarioRepository;
+        this.inscripcioneService = inscripcioneService;
     }
 
     @GetMapping("/")
@@ -132,6 +135,12 @@ public class HomeController {
         model.addAttribute("inscripciones", inscripcionesUsuario);
         model.addAttribute("eventos", eventoService.findAllByOrganizadorId(usuarioId));
         return "home/misInscripciones";
+    }
+
+    @GetMapping("/index/cancelarInscripcion/{inscripcionId}")
+    public String cancelarInscripcion(@PathVariable("inscripcionId") Integer inscripcionId, Model model) {
+        inscripcioneService.delete(inscripcionId);
+        return "home/perfil";
     }
 
 
