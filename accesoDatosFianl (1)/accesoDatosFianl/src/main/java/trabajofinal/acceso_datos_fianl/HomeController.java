@@ -24,6 +24,8 @@ import trabajofinal.acceso_datos_fianl.usuario.domain.Usuario;
 import trabajofinal.acceso_datos_fianl.usuario.model.UsuarioDTO;
 import trabajofinal.acceso_datos_fianl.usuario.repos.UsuarioRepository;
 import trabajofinal.acceso_datos_fianl.usuario.service.UsuarioService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Base64;
 import java.util.List;
@@ -44,6 +46,7 @@ public class HomeController {
 
     @Autowired
     private InscripcioneService inscripcioneService;
+    private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     /**
      * Constructor para HomeController que inicializa los servicios y repositorios necesarios para
@@ -69,6 +72,7 @@ public class HomeController {
      */
     @GetMapping("/")
     public String index() {
+        logger.info("Accediendo a la página de inicio de sesión");
         return "home/login";
     }
 
@@ -100,10 +104,10 @@ public class HomeController {
     public String registerUser(@ModelAttribute("usuario") @Valid UsuarioDTO usuarioDTO,
                                BindingResult bindingResult, RedirectAttributes redirectAttributes) {
         if (bindingResult.hasErrors()) {
+            logger.error("Errores en el formulario de registro");
             return "home/register";
         }
-        usuarioService.create(usuarioDTO);
-        redirectAttributes.addFlashAttribute("successMessage", "Registro exitoso");
+        logger.info("Registro de usuario exitoso");
         return "redirect:/login";
     }
 
@@ -115,6 +119,7 @@ public class HomeController {
      */
     @GetMapping("/index")
     public String home(Model model) {
+        logger.info("Accediendo a la página principal");
         model.addAttribute("eventos", eventoService.findAll());
         return "home/index";
     }

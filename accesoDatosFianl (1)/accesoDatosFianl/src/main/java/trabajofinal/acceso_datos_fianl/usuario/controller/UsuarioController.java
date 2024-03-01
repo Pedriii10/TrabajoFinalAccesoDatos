@@ -13,6 +13,8 @@ import trabajofinal.acceso_datos_fianl.usuario.model.UsuarioDTO;
 import trabajofinal.acceso_datos_fianl.usuario.service.UsuarioService;
 import trabajofinal.acceso_datos_fianl.util.ReferencedWarning;
 import trabajofinal.acceso_datos_fianl.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -27,6 +29,7 @@ import java.security.Principal;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+    private static final Logger logger = LoggerFactory.getLogger(UsuarioController.class);
     /**
      * Constructor del controlador que recibe el servicio de usuarios.
      *
@@ -43,6 +46,7 @@ public class UsuarioController {
      */
     @GetMapping
     public String list(final Model model) {
+        logger.info("Listando todos los usuarios");
         model.addAttribute("usuarios", usuarioService.findAll());
         return "usuario/list";
     }
@@ -71,10 +75,12 @@ public class UsuarioController {
             // Aquí se deberían incluir los errores en el RedirectAttributes para que estén disponibles después de la redirección
             redirectAttributes.addFlashAttribute(BindingResult.MODEL_KEY_PREFIX + "usuario", bindingResult);
             redirectAttributes.addFlashAttribute("usuario", usuarioDTO);
+            logger.error("Errores en el formulario de añadir usuario");
             return "redirect:/register"; // Redirige de nuevo a la página de registro
         }
         usuarioService.create(usuarioDTO);
         redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("usuario.create.success"));
+        logger.info("Usuario añadido exitosamente");
         return "redirect:/";
     }
 

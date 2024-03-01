@@ -20,6 +20,8 @@ import trabajofinal.acceso_datos_fianl.usuario.repos.UsuarioRepository;
 import trabajofinal.acceso_datos_fianl.util.CustomCollectors;
 import trabajofinal.acceso_datos_fianl.util.ReferencedWarning;
 import trabajofinal.acceso_datos_fianl.util.WebUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class EventoController {
     private final EventoService eventoService;
     private final EventoRepository eventoRepository;
     private final UsuarioRepository usuarioRepository;
+    private static final Logger logger = LoggerFactory.getLogger(EventoController.class);
 
     /**
      * Constructor que inyecta las dependencias necesarias para el controlador, incluyendo los servicios y repositorios.
@@ -69,6 +72,7 @@ public class EventoController {
      */
     @GetMapping
     public String list(final Model model) {
+        logger.info("Listando todos los eventos");
         model.addAttribute("eventoes", eventoService.findAll());
         return "evento/list";
     }
@@ -96,6 +100,7 @@ public class EventoController {
     public String add(@ModelAttribute("evento") @Valid final EventoDTO eventoDTO,
             final BindingResult bindingResult, final RedirectAttributes redirectAttributes, final Model model) {
         if (bindingResult.hasErrors()) {
+            logger.error("Errores en el formulario de añadir evento");
             return "evento/add";
         }
         Usuario u = (Usuario) model.getAttribute("user");
@@ -103,6 +108,7 @@ public class EventoController {
         eventoDTO.setOrganizador(u.getUsuarioId());
         eventoService.create(eventoDTO);
         redirectAttributes.addFlashAttribute(WebUtils.MSG_SUCCESS, WebUtils.getMessage("evento.create.success"));
+        logger.info("Evento añadido exitosamente");
         return "redirect:/index";
     }
     /**
